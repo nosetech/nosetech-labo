@@ -1,11 +1,92 @@
 ---
-import Welcome from "@components/Welcome.astro";
 import Layout from "@layouts/Layout.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import deskImage from "@assets/desk.svg";
+import rightcheatIcon from "@assets/rightcheat-icon.svg";
+import Footer from "@components/Footer.astro";
 ---
 
-<Layout>
-  <Welcome />
+<Layout title="NOSETECH LABO">
+  <main>
+    <section id="title">
+      <h1>NOSETECH LABO</h1>
+      <div>(study with coffee)</div>
+      <img
+        src={deskImage.src}
+        alt="A desk with a computer, plant, lamp, and coffee"
+        width="700px"
+      />
+      <img
+        src={rightcheatIcon.src}
+        alt="A desk with a computer, plant, lamp, and coffee"
+        width="70px"
+      />
+    </section>
+    <section>
+      <div>サイトコンセプトの文章を書く</div>
+    </section>
+    <section>
+      <div>News</div>
+      <ul>
+        <li>YYYY/MM/DD プロダクトにRightCheatをリリースしました。</li>
+        <li>YYYY/MM/DD サイトリリース!!</li>
+      </ul>
+    </section>
+    <section class="contents-tile">
+      <div id="rounded-box">
+        Portfolio
+        <div id="content-image">content image</div>
+      </div>
+      <div id="rounded-box">
+        About
+        <div id="content-image">content image</div>
+      </div>
+    </section>
+  </main>
+  <Footer />
 </Layout>
+
+<style>
+  main {
+    flex: 1;
+  }
+  #title {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-width: 1000px;
+  }
+
+  .contents-tile {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 32px;
+    justify-content: center;
+  }
+
+  #rounded-box {
+    position: relative;
+    width: 350px;
+    height: 200px;
+    border-radius: 6px;
+    background-color: #c2efac;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding-top: 10px;
+    padding-left: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
+  }
+
+  #content-image {
+    position: absolute;
+    top: 30%;
+    left: 56%;
+    width: 160px;
+    height: 150px;
+    background-color: lightgrey;
+    border-radius: 6px;
+  }
+</style>
