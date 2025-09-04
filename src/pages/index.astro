@@ -1,98 +1,60 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import deskImage from "@assets/desk.svg";
-import rightcheatIcon from "@assets/rightcheat-icon.svg";
+import SiteImage from "@components/SiteImage.astro";
+import News from "@components/News.astro";
+import ContentsTile from "@components/ContentsTile.astro";
 import portfolioImage from "@assets/portfolio-image.png";
 import aboutImage from "@assets/about-image.png";
-import Footer from "@components/Footer.astro";
 ---
 
 <Layout title="NOSETECH LABO">
-  <main>
-    <section id="title">
-      <h1>NOSETECH LABO</h1>
-      <div>(study with coffee)</div>
-      <img
-        src={deskImage.src}
-        alt="A desk with a computer, plant, lamp, and coffee"
-        width="700px"
-      />
-      <img
-        src={rightcheatIcon.src}
-        alt="A desk with a computer, plant, lamp, and coffee"
-        width="70px"
-      />
+  <div class="section-stack">
+    <section class="site-image">
+      <SiteImage />
     </section>
-    <section>
-      <div>サイトコンセプトの文章を書く</div>
-    </section>
-    <section>
-      <div>News</div>
-      <ul>
-        <li>YYYY/MM/DD プロダクトにRightCheatをリリースしました。</li>
-        <li>YYYY/MM/DD サイトリリース!!</li>
-      </ul>
+    <section class="news">
+      <News />
     </section>
     <section class="contents-tile">
-      <div id="rounded-box">
-        Portfolio
-        <img
-          id="content-image"
-          src={portfolioImage.src}
-          alt="A Portfolio Image"
-        />
-      </div>
-      <div id="rounded-box">
-        About
-        <img id="content-image" src={aboutImage.src} alt="A About Image" />
-      </div>
+      <ContentsTile
+        title="Portfolio"
+        imageSrc={portfolioImage.src}
+        imageAlt="A Portfolio Image"
+        tileColor="#94D189"
+      />
+      <ContentsTile
+        title="About"
+        imageSrc={aboutImage.src}
+        imageAlt="A About Image"
+        tileColor="#9883BE"
+      />
     </section>
-  </main>
-  <Footer />
+  </div>
 </Layout>
 
 <style>
-  main {
-    flex: 1;
-  }
-  #title {
+  .section-stack {
     display: flex;
-    align-items: center;
     flex-direction: column;
-    min-width: 1000px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .site-image {
+    margin-top: 16px;
+  }
+
+  .news {
+    width: 900px;
   }
 
   .contents-tile {
-    width: 100%;
+    margin: 24px;
+    width: 900px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     gap: 32px;
     justify-content: center;
-  }
-
-  #rounded-box {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    border-radius: 6px;
-    background-color: #c2efac;
-    display: flex;
-    justify-content: start;
-    align-items: start;
-    padding-top: 10px;
-    padding-left: 8px;
-    overflow: hidden;
-    box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
-  }
-
-  #content-image {
-    position: absolute;
-    top: 30%;
-    left: 30%;
-    width: 150px;
-    height: 150px;
-    background-color: lightgrey;
-    border-radius: 6px;
   }
 </style>

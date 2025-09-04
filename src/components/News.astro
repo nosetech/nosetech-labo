@@ -1,0 +1,35 @@
+---
+const maxLength = 3;
+const length = 3; // TODO: ニュースブログから動的に最新ニュース情報を取得して表示する
+---
+
+<div>
+  <h1>News</h1>
+  <ul>
+    <li>YYYY/MM/DD ニュースタイトル</li>
+    <li>2025/10/10 プロダクトにRightCheatをリリースしました。</li>
+    <li>2025/10/01 サイトリリース!!</li>
+  </ul>
+  {length <= maxLength && <div class="all-news">すべてのニュース</div>}
+</div>
+<style>
+  h1 {
+    padding: 0;
+  }
+
+  ul {
+    margin-top: -8px;
+    padding-left: 8px;
+    line-height: 32px;
+  }
+
+  li {
+    list-style: none;
+    gap: 8px;
+  }
+
+  .all-news {
+    margin-top: -16px;
+    text-align: right;
+  }
+</style>

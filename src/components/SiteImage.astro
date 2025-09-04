@@ -1,0 +1,43 @@
+---
+import deskImage from "@assets/desk.svg";
+import rightcheatIcon from "@assets/rightcheat-icon.svg";
+import Title from "@components/Title.astro";
+---
+
+<div class="site-image">
+  <div class="title">
+    <Title />
+  </div>
+  <div class="desk">
+    <img src={deskImage.src} alt="A desk" width="750px" />
+    <a href="https://github.com/nosetech/right-cheat" target="_blank"
+      ><img
+        class="product-on-desk"
+        src={rightcheatIcon.src}
+        alt="RightCheat"
+        width="70px"
+      /></a
+    >
+  </div>
+</div>
+
+<style>
+  .site-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .desk {
+    margin-top: 32px;
+    position: relative;
+  }
+
+  .product-on-desk {
+    position: absolute;
+    top: 5%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+  }
+</style>
