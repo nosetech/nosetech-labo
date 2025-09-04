@@ -2,6 +2,8 @@
 import Layout from "@layouts/Layout.astro";
 import deskImage from "@assets/desk.svg";
 import rightcheatIcon from "@assets/rightcheat-icon.svg";
+import portfolioImage from "@assets/portfolio-image.png";
+import aboutImage from "@assets/about-image.png";
 import Footer from "@components/Footer.astro";
 ---
 
@@ -34,11 +36,15 @@ import Footer from "@components/Footer.astro";
     <section class="contents-tile">
       <div id="rounded-box">
         Portfolio
-        <div id="content-image">content image</div>
+        <img
+          id="content-image"
+          src={portfolioImage.src}
+          alt="A Portfolio Image"
+        />
       </div>
       <div id="rounded-box">
         About
-        <div id="content-image">content image</div>
+        <img id="content-image" src={aboutImage.src} alt="A About Image" />
       </div>
     </section>
   </main>
@@ -67,7 +73,7 @@ import Footer from "@components/Footer.astro";
 
   #rounded-box {
     position: relative;
-    width: 350px;
+    width: 200px;
     height: 200px;
     border-radius: 6px;
     background-color: #c2efac;
@@ -83,8 +89,8 @@ import Footer from "@components/Footer.astro";
   #content-image {
     position: absolute;
     top: 30%;
-    left: 56%;
-    width: 160px;
+    left: 30%;
+    width: 150px;
     height: 150px;
     background-color: lightgrey;
     border-radius: 6px;
