@@ -37,7 +37,7 @@ import Title from "@components/Title.astro";
   }
 
   .desk {
-    margin-top: 32px;
+    margin-top: 40px;
     position: relative;
     width: 100%;
     max-width: 750px;
@@ -54,27 +54,15 @@ import Title from "@components/Title.astro";
     top: 5%;
     left: 20%;
     transform: translate(-50%, -50%);
-    width: 9.3%;
-    height: auto;
+    width: 70px;
   }
 
   @media (max-width: 767px) {
     .desk {
-      margin-top: 16px;
+      width: 90%;
     }
-
-    #desk-image {
-      max-width: 100%;
-    }
-
     .product-on-desk {
-      width: 10%;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    #desk-image {
-      max-width: 600px;
+      width: 50px;
     }
   }
 </style>

@@ -11,7 +11,7 @@ const { title, imageSrc, imageAlt, tileColor } = Astro.props;
 
 <style define:vars={{ tileColor }}>
   h1 {
-    font-size: clamp(24px, 4vw, 32px);
+    font-size: 32px;
     font-weight: normal;
     color: white;
     padding: 8px;
@@ -46,36 +46,5 @@ const { title, imageSrc, imageAlt, tileColor } = Astro.props;
     width: 200px;
     height: 150px;
     object-fit: cover;
-  }
-
-  @media (max-width: 767px) {
-    .tile {
-      min-width: 260px;
-      height: 180px;
-    }
-
-    h1 {
-      font-size: 24px;
-      padding: 6px;
-    }
-
-    .content-image {
-      top: 50px;
-      left: 80px;
-      width: 160px;
-      height: 120px;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .tile {
-      min-width: 280px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .tile {
-      min-width: 300px;
-    }
   }
 </style>
