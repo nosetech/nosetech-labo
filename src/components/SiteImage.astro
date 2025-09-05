@@ -16,14 +16,12 @@ import Title from "@components/Title.astro";
       data-light-src={deskImage.src}
       data-dark-src={deskDarkImage.src}
       alt="A desk"
-      width="750px"
     />
     <a href="https://github.com/nosetech/right-cheat" target="_blank"
       ><img
         class="product-on-desk"
         src={rightcheatIcon.src}
         alt="RightCheat"
-        width="70px"
       /></a
     >
   </div>
@@ -35,11 +33,20 @@ import Title from "@components/Title.astro";
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
   }
 
   .desk {
     margin-top: 32px;
     position: relative;
+    width: 100%;
+    max-width: 750px;
+  }
+
+  #desk-image {
+    width: 100%;
+    height: auto;
+    max-width: 750px;
   }
 
   .product-on-desk {
@@ -47,6 +54,28 @@ import Title from "@components/Title.astro";
     top: 5%;
     left: 20%;
     transform: translate(-50%, -50%);
+    width: 9.3%;
+    height: auto;
+  }
+
+  @media (max-width: 767px) {
+    .desk {
+      margin-top: 16px;
+    }
+
+    #desk-image {
+      max-width: 100%;
+    }
+
+    .product-on-desk {
+      width: 10%;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    #desk-image {
+      max-width: 600px;
+    }
   }
 </style>
 

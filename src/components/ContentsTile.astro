@@ -6,18 +6,12 @@ const { title, imageSrc, imageAlt, tileColor } = Astro.props;
   <h1>
     {title}
   </h1>
-  <img
-    class="content-image"
-    src={imageSrc}
-    alt={imageAlt}
-    width="200px"
-    height="150px"
-  />
+  <img class="content-image" src={imageSrc} alt={imageAlt} />
 </div>
 
 <style define:vars={{ tileColor }}>
   h1 {
-    font-size: 32px;
+    font-size: clamp(24px, 4vw, 32px);
     font-weight: normal;
     color: white;
     padding: 8px;
@@ -26,17 +20,62 @@ const { title, imageSrc, imageAlt, tileColor } = Astro.props;
 
   .tile {
     position: relative;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
+    min-width: 280px;
     height: 200px;
     background-color: var(--tileColor);
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 6px 12px rgb(0 0 0 / 25%);
   }
 
   .content-image {
     position: absolute;
     top: 60px;
     left: 100px;
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 767px) {
+    .tile {
+      min-width: 260px;
+      height: 180px;
+    }
+
+    h1 {
+      font-size: 24px;
+      padding: 6px;
+    }
+
+    .content-image {
+      top: 50px;
+      left: 80px;
+      width: 160px;
+      height: 120px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .tile {
+      min-width: 280px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tile {
+      min-width: 300px;
+    }
   }
 </style>

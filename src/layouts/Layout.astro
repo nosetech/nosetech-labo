@@ -41,5 +41,19 @@ const { title } = Astro.props;
     flex: 1;
     padding: 8px;
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  @media (min-width: 768px) {
+    main {
+      padding: 16px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    main {
+      padding: 20px;
+    }
   }
 </style>
