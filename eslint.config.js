@@ -13,6 +13,13 @@ export default [
         ecmaVersion: "latest",
         sourceType: "module",
       },
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        localStorage: "readonly",
+        MediaQueryListEvent: "readonly",
+        HTMLInputElement: "readonly",
+      },
     },
     plugins: {
       "@typescript-eslint": tsEslint,

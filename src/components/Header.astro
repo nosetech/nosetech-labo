@@ -1,5 +1,5 @@
 ---
-import ThemeToggle from "./ThemeToggle.astro";
+import ThemeToggle from "./ThemeToggle.tsx";
 // TODO: 引数によって左端に表示するロゴの有無を決められるようにする。
 ---
 
@@ -9,7 +9,7 @@ import ThemeToggle from "./ThemeToggle.astro";
       <!-- ロゴがここに入る予定 -->
     </div>
     <div class="theme-toggle-wrapper">
-      <ThemeToggle />
+      <ThemeToggle client:load />
     </div>
   </div>
 </header>
