@@ -1,6 +1,14 @@
 {
   "permissions": {
-    "allow": ["mcp__astro-docs__search_astro_docs", "Bash(gh issue create:*)"],
+    "allow": [
+      "mcp__astro-docs__search_astro_docs",
+      "Bash(gh issue create:*)",
+      "Bash(gh issue view:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)"
+    ],
     "deny": [],
     "ask": []
   }

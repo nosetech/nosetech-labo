@@ -39,3 +39,4 @@
 - 静的ファイルは`public/`に置き、ルートで提供
 - TypeScriptは厳格モードで設定
 - MDXファイルは`src/pages/`に作成でき、自動的にルーティングされます
+- commit する前はyarn formatを実行してください。
