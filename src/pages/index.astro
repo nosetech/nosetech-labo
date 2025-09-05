@@ -1,11 +1,60 @@
 ---
-import Welcome from "@components/Welcome.astro";
 import Layout from "@layouts/Layout.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import SiteImage from "@components/SiteImage.astro";
+import News from "@components/News.astro";
+import ContentsTile from "@components/ContentsTile.astro";
+import portfolioImage from "@assets/portfolio-image.png";
+import aboutImage from "@assets/about-image.png";
 ---
 
-<Layout>
-  <Welcome />
+<Layout title="NOSETECH LABO">
+  <div class="section-stack">
+    <section class="site-image">
+      <SiteImage />
+    </section>
+    <section class="news">
+      <News />
+    </section>
+    <section class="contents-tile">
+      <ContentsTile
+        title="Portfolio"
+        imageSrc={portfolioImage.src}
+        imageAlt="A Portfolio Image"
+        tileColor="#94D189"
+      />
+      <ContentsTile
+        title="About"
+        imageSrc={aboutImage.src}
+        imageAlt="A About Image"
+        tileColor="#9883BE"
+      />
+    </section>
+  </div>
 </Layout>
+
+<style>
+  .section-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .site-image {
+    margin-top: 16px;
+  }
+
+  .news {
+    width: 900px;
+  }
+
+  .contents-tile {
+    margin: 24px;
+    width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 32px;
+    justify-content: center;
+  }
+</style>
