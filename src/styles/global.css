@@ -26,3 +26,17 @@ html {
     background-color 0.3s ease,
     color 0.3s ease;
 }
+
+/* レスポンシブブレークポイント */
+/* モバイル: ~768px */
+/* タブレット: 768px~1024px */
+/* デスクトップ: 1024px~ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

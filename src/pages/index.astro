@@ -45,16 +45,42 @@ import aboutImage from "@assets/about-image.png";
   }
 
   .news {
-    width: 900px;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 16px;
   }
 
   .contents-tile {
-    margin: 24px;
-    width: 900px;
+    margin: 24px 0;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 16px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    gap: 32px;
+    gap: 16px;
     justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .news {
+      padding: 0 24px;
+    }
+
+    .contents-tile {
+      padding: 0 24px;
+      gap: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .news {
+      padding: 0;
+    }
+
+    .contents-tile {
+      padding: 0;
+      gap: 32px;
+    }
   }
 </style>
