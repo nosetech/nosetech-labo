@@ -1,5 +1,6 @@
 ---
 import deskImage from "@assets/desk.svg";
+import deskDarkImage from "@assets/desk-dark.svg";
 import rightcheatIcon from "@assets/rightcheat-icon.svg";
 import Title from "@components/Title.astro";
 ---
@@ -13,6 +14,7 @@ import Title from "@components/Title.astro";
       id="desk-image"
       src={deskImage.src}
       data-light-src={deskImage.src}
+      data-dark-src={deskDarkImage.src}
       alt="A desk"
       width="750px"
     />
@@ -58,7 +60,10 @@ import Title from "@components/Title.astro";
     function updateDeskImage() {
       const currentTheme = html.getAttribute("data-theme") || "light";
       if (currentTheme === "dark") {
-        deskImage.src = "/desk-dark.svg";
+        const darkDeskSrc = deskImage.getAttribute("data-dark-src");
+        if (darkDeskSrc) {
+          deskImage.src = darkDeskSrc;
+        }
       } else {
         // ライトテーマの場合は元のインポートされたアセットのパスを使用
         const lightDeskSrc = deskImage.getAttribute("data-light-src");
