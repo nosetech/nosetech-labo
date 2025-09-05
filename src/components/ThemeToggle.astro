@@ -1,0 +1,115 @@
+---
+
+---
+
+<button id="theme-toggle" aria-label="テーマを切り替え">
+  <span class="sun-icon">☀️</span>
+  <span class="moon-icon">🌙</span>
+</button>
+
+<style>
+  #theme-toggle {
+    background: none;
+    border: 2px solid var(--color-border);
+    border-radius: 20px;
+    width: 40px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  #theme-toggle:hover {
+    background-color: var(--color-hover);
+    border-color: var(--color-primary);
+  }
+
+  .sun-icon,
+  .moon-icon {
+    font-size: 12px;
+    position: absolute;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .sun-icon {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+
+  .moon-icon {
+    transform: translateX(0) scale(0.8);
+    opacity: 0;
+  }
+
+  [data-theme="dark"] .sun-icon {
+    transform: translateX(0) scale(0.8);
+    opacity: 0;
+  }
+
+  [data-theme="dark"] .moon-icon {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+</style>
+
+<script>
+  function initThemeToggle() {
+    const toggle = document.getElementById("theme-toggle");
+    const html = document.documentElement;
+
+    // システム設定に基づく初期テーマ検出
+    function getInitialTheme() {
+      const stored = localStorage.getItem("theme");
+      if (stored) {
+        return stored;
+      }
+
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    // テーマを設定する関数
+    function setTheme(theme: string) {
+      html.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    }
+
+    // テーマを切り替える関数
+    function toggleTheme() {
+      const currentTheme = html.getAttribute("data-theme") || "light";
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      setTheme(newTheme);
+    }
+
+    // 初期テーマを設定
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+
+    // クリックイベントリスナー
+    toggle?.addEventListener("click", toggleTheme);
+
+    // システム設定変更の監視
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+          setTheme(e.matches ? "dark" : "light");
+        }
+      });
+  }
+
+  // DOMContentLoadedで初期化
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initThemeToggle);
+  } else {
+    initThemeToggle();
+  }
+</script>

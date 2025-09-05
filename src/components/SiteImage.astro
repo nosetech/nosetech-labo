@@ -1,5 +1,6 @@
 ---
 import deskImage from "@assets/desk.svg";
+import deskDarkImage from "@assets/desk-dark.svg";
 import rightcheatIcon from "@assets/rightcheat-icon.svg";
 import Title from "@components/Title.astro";
 ---
@@ -9,7 +10,14 @@ import Title from "@components/Title.astro";
     <Title />
   </div>
   <div class="desk">
-    <img src={deskImage.src} alt="A desk" width="750px" />
+    <img
+      id="desk-image"
+      src={deskImage.src}
+      data-light-src={deskImage.src}
+      data-dark-src={deskDarkImage.src}
+      alt="A desk"
+      width="750px"
+    />
     <a href="https://github.com/nosetech/right-cheat" target="_blank"
       ><img
         class="product-on-desk"
@@ -41,3 +49,55 @@ import Title from "@components/Title.astro";
     transform: translate(-50%, -50%);
   }
 </style>
+
+<script>
+  function initDeskImageTheme() {
+    const deskImage = document.getElementById("desk-image") as HTMLImageElement;
+    const html = document.documentElement;
+
+    if (!deskImage) return;
+
+    function updateDeskImage() {
+      const currentTheme = html.getAttribute("data-theme") || "light";
+      if (currentTheme === "dark") {
+        const darkDeskSrc = deskImage.getAttribute("data-dark-src");
+        if (darkDeskSrc) {
+          deskImage.src = darkDeskSrc;
+        }
+      } else {
+        // ライトテーマの場合は元のインポートされたアセットのパスを使用
+        const lightDeskSrc = deskImage.getAttribute("data-light-src");
+        if (lightDeskSrc) {
+          deskImage.src = lightDeskSrc;
+        }
+      }
+    }
+
+    // 初期画像設定
+    updateDeskImage();
+
+    // テーマ変更の監視
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "data-theme"
+        ) {
+          updateDeskImage();
+        }
+      });
+    });
+
+    observer.observe(html, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  }
+
+  // DOMContentLoadedで初期化
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDeskImageTheme);
+  } else {
+    initDeskImageTheme();
+  }
+</script>
