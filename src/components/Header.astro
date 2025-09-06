@@ -1,12 +1,16 @@
 ---
-import ThemeToggle from "./ThemeToggle.tsx";
-// TODO: 引数によって左端に表示するロゴの有無を決められるようにする。
+import ThemeToggle from "@components/ThemeToggle.tsx";
+import Logo from "@components/Logo.astro";
+import Menu from "@components/Menu.astro";
 ---
 
 <header>
   <div class="header-content">
     <div class="logo">
-      <!-- ロゴがここに入る予定 -->
+      <Logo />
+    </div>
+    <div class="menu">
+      <Menu />
     </div>
     <div class="theme-toggle-wrapper">
       <ThemeToggle client:load />
@@ -20,8 +24,7 @@ import ThemeToggle from "./ThemeToggle.tsx";
     height: 60px;
     background-color: var(--color-secondary);
     border-bottom: 1px solid var(--color-border);
-    padding: 0 16px;
-    transition: all 0.3s ease;
+    padding: 0 8px;
   }
 
   .header-content {
@@ -33,6 +36,10 @@ import ThemeToggle from "./ThemeToggle.tsx";
 
   .logo {
     flex: 1;
+  }
+
+  .menu {
+    flex: 2;
   }
 
   .theme-toggle-wrapper {
