@@ -7,7 +7,7 @@ import Menu from "@components/Menu.astro";
 <header>
   <div class="header-content">
     <div class="logo">
-      <Logo />
+      <a href="/"><Logo /></a>
     </div>
     <div class="menu">
       <Menu />
@@ -22,7 +22,6 @@ import Menu from "@components/Menu.astro";
   header {
     width: 100%;
     height: 60px;
-    background-color: var(--color-secondary);
     border-bottom: 1px solid var(--color-border);
     padding: 0 8px;
   }
@@ -32,17 +31,25 @@ import Menu from "@components/Menu.astro";
     justify-content: space-between;
     align-items: center;
     height: 100%;
+    position: relative;
   }
 
   .logo {
-    flex: 1;
+    flex: 0 0 auto;
+  }
+
+  .logo a {
+    text-decoration: none;
   }
 
   .menu {
-    flex: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .theme-toggle-wrapper {
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
   }
