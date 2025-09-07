@@ -2,6 +2,7 @@
 import ThemeToggle from "@components/ThemeToggle.tsx";
 import Logo from "@components/Logo.astro";
 import Menu from "@components/Menu.astro";
+import HamburgerMenu from "@components/HamburgerMenu.astro";
 ---
 
 <header>
@@ -9,10 +10,13 @@ import Menu from "@components/Menu.astro";
     <div class="logo">
       <a href="/"><Logo /></a>
     </div>
-    <div class="menu">
+    <div class="menu desktop-only">
       <Menu />
     </div>
     <div class="theme-toggle-wrapper">
+      <div class="hamburger-wrapper mobile-only">
+        <HamburgerMenu />
+      </div>
       <ThemeToggle client:load />
     </div>
   </div>
@@ -52,5 +56,23 @@ import Menu from "@components/Menu.astro";
     flex: 0 0 auto;
     display: flex;
     align-items: center;
+  }
+
+  .desktop-only {
+    display: block;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  @media (max-width: 700px) {
+    .desktop-only {
+      display: none;
+    }
+
+    .mobile-only {
+      display: flex;
+    }
   }
 </style>
