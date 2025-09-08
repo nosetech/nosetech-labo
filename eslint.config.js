@@ -19,6 +19,7 @@ export default [
         localStorage: "readonly",
         MediaQueryListEvent: "readonly",
         HTMLInputElement: "readonly",
+        MutationObserver: "readonly",
       },
     },
     plugins: {

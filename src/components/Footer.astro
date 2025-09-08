@@ -1,17 +1,47 @@
 ---
 const year = "2025";
+import GithubIcon from "@components/GithubIcon.astro";
 ---
 
 <footer>
-  <div>
+  <div class="copyright">
     ©︎ {year} NOSETECH
+  </div>
+  <div class="github-icon" style="--icon-width: 30px;">
+    <a href="https://github.com/nosetech" target="_blank">
+      <GithubIcon />
+    </a>
   </div>
 </footer>
 
 <style>
   footer {
+    position: relative;
     height: 3vh;
     line-height: 3vh;
-    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .copyright {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .github-icon {
+    position: absolute;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  @media (max-width: 700px) {
+    .github-icon {
+      right: 8px;
+    }
   }
 </style>
