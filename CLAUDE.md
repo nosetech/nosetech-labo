@@ -15,6 +15,8 @@
 - `yarn build` - プロダクション用サイトを`./dist/`にビルド
 - `yarn preview` - プロダクション用ビルドをローカルでプレビュー
 - `yarn astro` - Astro CLIコマンドを実行
+- `yarn lint` - ESLintでコードをチェック
+- `yarn format` - Prettierでコードをフォーマット
 
 ## プロジェクト構造
 
@@ -39,4 +41,4 @@
 - 静的ファイルは`public/`に置き、ルートで提供
 - TypeScriptは厳格モードで設定
 - MDXファイルは`src/pages/`に作成でき、自動的にルーティングされます
-- commit する前はyarn formatを実行してください。
+- commitする前にはyarn lint, yarn formatを実行してください。

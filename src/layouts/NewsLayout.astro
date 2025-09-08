@@ -1,0 +1,115 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+    description: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={`${frontmatter.title} | NOSETECH LABO`} description={frontmatter.description}>
+  <main>
+    <article class="news-article">
+      <header class="article-header">
+        <h1>{frontmatter.title}</h1>
+        <time datetime={frontmatter.date}>
+          {new Date(frontmatter.date).toLocaleDateString('ja-JP')}
+        </time>
+      </header>
+      <div class="article-content">
+        <slot />
+      </div>
+    </article>
+    <nav class="article-nav">
+      <a href="/news" class="back-to-news">← ニュース一覧に戻る</a>
+    </nav>
+  </main>
+</Layout>
+
+<style>
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .article-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+  }
+
+  .article-header h1 {
+    margin: 0 0 1rem 0;
+    font-size: 2rem;
+  }
+
+  .article-header time {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .article-content {
+    line-height: 1.8;
+  }
+
+  .article-content h1,
+  .article-content h2,
+  .article-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .article-content p {
+    margin-bottom: 1rem;
+  }
+
+  .article-content ul,
+  .article-content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+  }
+
+  .article-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .article-content a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+
+  .article-content a:hover {
+    text-decoration: underline;
+  }
+
+  .article-nav {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+  }
+
+  .back-to-news {
+    color: #666;
+    text-decoration: none;
+  }
+
+  .back-to-news:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 700px) {
+    main {
+      padding: 1rem;
+    }
+
+    .article-header h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
