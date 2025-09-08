@@ -4,8 +4,7 @@
   --color-primary: #0066cc;
   --color-secondary: #f5f5f5;
   --color-border: #e0e0e0;
-  --color-hover: #f0f0f0;
-  --color-accent: #ff6b35;
+  --color-disabletext: #c0c0c0;
 }
 
 [data-theme="dark"] {
@@ -14,8 +13,7 @@
   --color-primary: #4a9eff;
   --color-secondary: #2a2a2a;
   --color-border: #404040;
-  --color-hover: #333333;
-  --color-accent: #ff8c69;
+  --color-disabletext: #707070;
 }
 
 html {
