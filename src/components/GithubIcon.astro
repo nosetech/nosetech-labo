@@ -10,13 +10,26 @@ import DarkIcon from "@assets/github-mark-white.svg";
     data-light-src={LightIcon.src}
     data-dark-src={DarkIcon.src}
     alt="github icon"
-    width="20px"
   />
 </div>
 
+<style>
+  #github-icon {
+    width: var(--icon-width, 30px);
+  }
+
+  @media (max-width: 700px) {
+    #github-icon {
+      width: 20px;
+    }
+  }
+</style>
+
 <script>
   function initGithubIconTheme() {
-    const githubIcon = document.getElementById("github-icon") as HTMLImageElement;
+    const githubIcon = document.getElementById(
+      "github-icon",
+    ) as HTMLImageElement;
     const html = document.documentElement;
 
     if (!githubIcon) return;
