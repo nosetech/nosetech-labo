@@ -1,17 +1,19 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import type { CollectionEntry } from "astro:content";
 
 // すべてのニュース記事を取得
 const allPosts = await Astro.glob<{
   title: string;
   date: string;
   description: string;
-}>('./posts/*.{md,mdx}');
+}>("./posts/*.{md,mdx}");
 
 // 日付でソート（新しい順）
 const sortedPosts = allPosts.sort((a, b) => {
-  return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+  return (
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+  );
 });
 ---
 
@@ -19,17 +21,19 @@ const sortedPosts = allPosts.sort((a, b) => {
   <main>
     <h1>ニュース</h1>
     <div class="news-list">
-      {sortedPosts.map((post) => (
-        <article class="news-item">
-          <time datetime={post.frontmatter.date}>
-            {new Date(post.frontmatter.date).toLocaleDateString('ja-JP')}
-          </time>
-          <h2>
-            <a href={post.url}>{post.frontmatter.title}</a>
-          </h2>
-          <p class="description">{post.frontmatter.description}</p>
-        </article>
-      ))}
+      {
+        sortedPosts.map((post) => (
+          <article class="news-item">
+            <time datetime={post.frontmatter.date}>
+              {new Date(post.frontmatter.date).toLocaleDateString("ja-JP")}
+            </time>
+            <h2>
+              <a href={post.url}>{post.frontmatter.title}</a>
+            </h2>
+            <p class="description">{post.frontmatter.description}</p>
+          </article>
+        ))
+      }
     </div>
   </main>
 </Layout>

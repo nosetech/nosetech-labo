@@ -6,5 +6,7 @@ GitHub issueを分析して実行してください: issue番号 $ARGUMENTS
 2. 問題の理解
 3. 関連ファイルの検索
 4. 修正の実装
-5. gitコミット
-6. gitプルリクエスト作成
+5. yarn lintを実行し、エラーがあれば修正する。
+6. yarn formatを実行する
+7. gitコミット
+8. gitプルリクエスト作成

@@ -4,11 +4,15 @@ const allPosts = await Astro.glob<{
   title: string;
   date: string;
   description: string;
-}>('../pages/news/posts/*.{md,mdx}');
+}>("../pages/news/posts/*.{md,mdx}");
 
 // 日付でソート（新しい順）して最新3件を取得
 const latestPosts = allPosts
-  .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime(),
+  )
   .slice(0, 3);
 
 const maxLength = 3;
@@ -17,19 +21,24 @@ const maxLength = 3;
 <div>
   <h1>News</h1>
   <ul>
-    {latestPosts.map((post) => (
-      <li>
-        <a href={post.url}>
-          {new Date(post.frontmatter.date).toLocaleDateString('ja-JP')} {post.frontmatter.title}
-        </a>
-      </li>
-    ))}
+    {
+      latestPosts.map((post) => (
+        <li>
+          <a href={post.url}>
+            {new Date(post.frontmatter.date).toLocaleDateString("ja-JP")}{" "}
+            {post.frontmatter.title}
+          </a>
+        </li>
+      ))
+    }
   </ul>
-  {latestPosts.length >= maxLength && (
-    <div class="all-news">
-      <a href="/news">すべてのニュース</a>
-    </div>
-  )}
+  {
+    latestPosts.length >= maxLength && (
+      <div class="all-news">
+        <a href="/news">すべてのニュース</a>
+      </div>
+    )
+  }
 </div>
 <style>
   h1 {
