@@ -6,6 +6,7 @@ import DarkIcon from "@assets/github-mark-white.svg";
 <div>
   <img
     id="github-icon"
+    data-theme-element
     src={LightIcon.src}
     data-light-src={LightIcon.src}
     data-dark-src={DarkIcon.src}
@@ -26,51 +27,5 @@ import DarkIcon from "@assets/github-mark-white.svg";
 </style>
 
 <script>
-  function initGithubIconTheme() {
-    const githubIcon = document.getElementById(
-      "github-icon",
-    ) as HTMLImageElement;
-    const html = document.documentElement;
-
-    if (!githubIcon) return;
-
-    function updateGithubIcon() {
-      const currentTheme = html.getAttribute("data-theme") || "light";
-      if (currentTheme === "dark") {
-        const darkSrc = githubIcon.getAttribute("data-dark-src");
-        if (darkSrc) {
-          githubIcon.src = darkSrc;
-        }
-      } else {
-        const lightSrc = githubIcon.getAttribute("data-light-src");
-        if (lightSrc) {
-          githubIcon.src = lightSrc;
-        }
-      }
-    }
-
-    updateGithubIcon();
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "data-theme"
-        ) {
-          updateGithubIcon();
-        }
-      });
-    });
-
-    observer.observe(html, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initGithubIconTheme);
-  } else {
-    initGithubIconTheme();
-  }
+  import "@scripts/theme-init.js";
 </script>
