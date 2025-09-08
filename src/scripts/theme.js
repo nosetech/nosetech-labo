@@ -6,7 +6,7 @@ export function initThemeObserver(elementId) {
 
   function updateElement() {
     const currentTheme = html.getAttribute("data-theme") || "light";
-    
+
     if (currentTheme === "dark") {
       const darkSrc = element.getAttribute("data-dark-src");
       if (darkSrc) {
@@ -41,7 +41,7 @@ export function initThemeObserver(elementId) {
 
 export function initializeThemeElements() {
   const themeElements = document.querySelectorAll("[data-theme-element]");
-  
+
   themeElements.forEach((element) => {
     if (element.id) {
       initThemeObserver(element.id);
