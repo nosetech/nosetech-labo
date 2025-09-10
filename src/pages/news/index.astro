@@ -1,9 +1,11 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import DefaultNewsImage from "@assets/default-news-image.png"
 
 // すべてのニュース記事を取得
 const allPosts = await Astro.glob<{
   title: string;
+  type: string;
   date: string;
   description: string;
 }>("./posts/*.{md,mdx}");
@@ -17,75 +19,128 @@ const sortedPosts = allPosts.sort((a, b) => {
 });
 ---
 
-<Layout title="ニュース | NOSETECH LABO">
-  <main>
-    <h1>ニュース</h1>
+<Layout title="News & Update">
+  <div class="section-stack">
+    <h1>News & Update</h1>
     <div class="news-list">
       {
         sortedPosts.map((post) => (
-          <article class="news-item">
-            <time datetime={post.frontmatter.date}>
-              {new Date(post.frontmatter.date).toLocaleDateString("ja-JP")}
-            </time>
-            <h2>
-              <a href={post.url}>{post.frontmatter.title}</a>
-            </h2>
-            <p class="description">{post.frontmatter.description}</p>
-          </article>
+          <a href={post.url}>
+            <article class="news-item">
+              <div class="news-item-header">
+                <div class="news-type"> {post.frontmatter.type}</div>
+                <time datetime={post.frontmatter.date}>
+                  {new Date(post.frontmatter.date).toLocaleDateString("ja-JP", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                  })}
+                </time>
+              </div>
+              <div class="news-item-body">
+                <img src={DefaultNewsImage.src} alt="news image"} width="200px"/>
+                <div class="news-item-content">
+                  <h2> {post.frontmatter.title}</h2>
+                  <p class="description">{post.frontmatter.description}</p>
+                </div>
+              </div>
+            </article>
+          </a>
         ))
       }
     </div>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
+  .section-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
   }
 
   h1 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 36px;
   }
 
   .news-list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 16px;
   }
 
-  .news-item {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 1rem;
-  }
-
-  .news-item:last-child {
-    border-bottom: none;
-  }
-
-  time {
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  h2 {
-    margin: 0.5rem 0;
-  }
-
-  h2 a {
+  .news-list a {
     color: inherit;
     text-decoration: none;
   }
 
-  h2 a:hover {
-    text-decoration: underline;
+  .news-item {
+    max-width: 800px;
+    border: 0.5px solid;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .news-item:hover {
+    transform: scale(1.02);
+  }
+
+  .news-item-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .news-type {
+    font-size: 20px;
+    color: black;
+    width: 100px;
+    border-radius: 16px;
+    background: #f0d1d1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  time {
+    font-size: 16px;
+    color: var(--color-text);
+  }
+
+  .news-item-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .news-item-body img {
+    border: 0.5px solid var(--color-border);
+
+  }
+
+  .news-item-content {
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 4px;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 0px;
   }
 
   .description {
-    color: #666;
-    margin: 0;
+    font-size: 16px;
+    margin: 0px;
   }
 
   @media (max-width: 700px) {
@@ -94,7 +149,7 @@ const sortedPosts = allPosts.sort((a, b) => {
     }
 
     h1 {
-      font-size: 1.5rem;
+      font-size: 24px;
     }
   }
 </style>

@@ -1,6 +1,7 @@
 ---
 layout: "@layouts/NewsLayout.astro"
 title: "レスポンシブデザイン対応完了"
+type: "Update"
 date: "2025-01-15"
 description: "Webサイトのレスポンシブデザイン対応を完了しました。モバイル・タブレット・デスクトップすべてのデバイスで最適な表示を実現。"
 ---

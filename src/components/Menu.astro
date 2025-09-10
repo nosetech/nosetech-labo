@@ -1,6 +1,7 @@
 <div class="menu">
-  <div>Portfolio</div>
-  <div>About</div>
+  <a href="/news"><div>News</div></a>
+  <a href="#"><div>Portfolio</div></a>
+  <a href="#"><div>About</div></a>
 </div>
 
 <style>
@@ -13,8 +14,12 @@
     font-weight: 500;
     color: var(--color-disabletext);
   }
-  .menu div {
+  .menu a {
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .menu div {
     padding: 8px 12px;
     transition: color 0.3s;
   }

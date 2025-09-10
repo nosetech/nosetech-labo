@@ -42,3 +42,32 @@
 - TypeScriptは厳格モードで設定
 - MDXファイルは`src/pages/`に作成でき、自動的にルーティングされます
 - commitする前にはyarn lint, yarn formatを実行してください。
+
+## Journaling workflow
+
+InkdropのMCPサーバーを使用できる状態の場合、あなた (AI エージェント) は、このプロジェクトで行った作業を、タスクの終了ごとに私の Inkdrop ノートに報告してください。
+
+「NOSETECH-LABO」ノートブックに「Log: <Job title>」というタイトルで作成します。
+
+タスクの終了ごとに、次の形式でノートを書いてください。:
+
+## Log: <task title>
+
+- **Prompt**: <受け取った指示>
+- **Issue**: <課題の内容>
+
+### What I did: <やったことの要約>
+
+...
+
+### How I did it: <どうやって解決したか>
+
+...
+
+### What were challenging: <難しかったこと>
+
+...
+
+### Future work (optional)
+
+- <今後の改善案など>
