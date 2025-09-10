@@ -28,7 +28,7 @@ const sortedPosts = allPosts.sort((a, b) => {
           <a href={post.url}>
             <article class="news-item">
               <div class="news-item-header">
-                <div class="news-type"> {post.frontmatter.type}</div>
+                <div class={`news-type ${post.frontmatter.type === 'Update' ? 'update-type' : ''}`}> {post.frontmatter.type}</div>
                 <time datetime={post.frontmatter.date}>
                   {new Date(post.frontmatter.date).toLocaleDateString("ja-JP", {
                     year: "numeric",
@@ -106,6 +106,10 @@ const sortedPosts = allPosts.sort((a, b) => {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .update-type {
+    background: #D3E5C6;
   }
 
   time {
