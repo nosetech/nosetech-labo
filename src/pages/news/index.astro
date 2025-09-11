@@ -1,6 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import DefaultNewsImage from "@assets/default-news-image.png"
+import DefaultNewsImage from "@assets/default-news-image.png";
 
 // すべてのニュース記事を取得
 const allPosts = await Astro.glob<{
@@ -28,7 +28,12 @@ const sortedPosts = allPosts.sort((a, b) => {
           <a href={post.url}>
             <article class="news-item">
               <div class="news-item-header">
-                <div class={`news-type ${post.frontmatter.type === 'Update' ? 'update-type' : ''}`}> {post.frontmatter.type}</div>
+                <div
+                  class={`news-type ${post.frontmatter.type === "Update" ? "update-type" : ""}`}
+                >
+                  {" "}
+                  {post.frontmatter.type}
+                </div>
                 <time datetime={post.frontmatter.date}>
                   {new Date(post.frontmatter.date).toLocaleDateString("ja-JP", {
                     year: "numeric",
@@ -38,7 +43,11 @@ const sortedPosts = allPosts.sort((a, b) => {
                 </time>
               </div>
               <div class="news-item-body">
-                <img src={DefaultNewsImage.src} alt="news image"} width="200px"/>
+                <img
+                  src={DefaultNewsImage.src}
+                  alt="news image"
+                  width="200px"
+                />
                 <div class="news-item-content">
                   <h2> {post.frontmatter.title}</h2>
                   <p class="description">{post.frontmatter.description}</p>
@@ -58,6 +67,7 @@ const sortedPosts = allPosts.sort((a, b) => {
     flex-direction: column;
     align-items: center;
     gap: 40px;
+    margin-bottom: 32px;
   }
 
   h1 {
@@ -65,8 +75,10 @@ const sortedPosts = allPosts.sort((a, b) => {
   }
 
   .news-list {
+    width: 95%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 16px;
   }
 
@@ -109,7 +121,7 @@ const sortedPosts = allPosts.sort((a, b) => {
   }
 
   .update-type {
-    background: #D3E5C6;
+    background: #d3e5c6;
   }
 
   time {
@@ -126,11 +138,10 @@ const sortedPosts = allPosts.sort((a, b) => {
 
   .news-item-body img {
     border: 0.5px solid var(--color-border);
-
   }
 
   .news-item-content {
-    height: 130px;
+    min-height: 130px;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -148,12 +159,44 @@ const sortedPosts = allPosts.sort((a, b) => {
   }
 
   @media (max-width: 700px) {
-    main {
-      padding: 1rem;
+    .section-stack {
+      gap: 16px;
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 28px;
+    }
+
+    .news-list {
+      max-width: 368px;
+      padding: 4px;
+    }
+
+    .news-item-header {
+      margin-bottom: 8px;
+    }
+
+    .news-type {
+      font-size: 15px;
+      width: 74px;
+    }
+
+    time {
+      font-size: 12px;
+    }
+
+    .news-item-body {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    .description {
+      font-size: 14px;
     }
   }
 </style>
