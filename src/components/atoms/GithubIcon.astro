@@ -5,7 +5,7 @@ import DarkIcon from "@assets/github-mark-white.svg";
 
 <div>
   <img
-    class="github-icon"
+    id="github-icon"
     data-theme-element
     src={LightIcon.src}
     data-light-src={LightIcon.src}
@@ -15,12 +15,12 @@ import DarkIcon from "@assets/github-mark-white.svg";
 </div>
 
 <style>
-  .github-icon {
+  #github-icon {
     width: var(--icon-width, 30px);
   }
 
   @media (max-width: 700px) {
-    .github-icon {
+    #github-icon {
       width: 20px;
     }
   }

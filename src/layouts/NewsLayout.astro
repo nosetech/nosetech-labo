@@ -1,10 +1,13 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import NewsHeader from "@components/molecules/NewsHeader.astro";
 
 export interface Props {
   frontmatter: {
     title: string;
+    type: string;
     date: string;
+    image: string;
     description: string;
   };
 }
@@ -13,106 +16,72 @@ const { frontmatter } = Astro.props;
 ---
 
 <Layout
-  title={`${frontmatter.title} | NOSETECH LABO`}
+  title={`${frontmatter.title} | News`}
   description={frontmatter.description}
 >
-  <main>
-    <article class="news-article">
-      <header class="article-header">
-        <h1>{frontmatter.title}</h1>
-        <time datetime={frontmatter.date}>
-          {new Date(frontmatter.date).toLocaleDateString("ja-JP")}
-        </time>
-      </header>
-      <div class="article-content">
-        <slot />
+  <article class="news-article">
+    <header class="article-header">
+      <div class="news-image">
+        <img
+          src={frontmatter.image ?? "/news/default-news-image.png"}
+          alt="news image"
+          width="100%"
+        />
       </div>
-    </article>
-    <nav class="article-nav">
-      <a href="/news" class="back-to-news">← ニュース一覧に戻る</a>
-    </nav>
-  </main>
+      <NewsHeader type={frontmatter.type} date={frontmatter.date} />
+      <h1>{frontmatter.title}</h1>
+    </header>
+    <div class="article-content">
+      <slot />
+    </div>
+  </article>
 </Layout>
 
 <style>
-  main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
+  .news-article {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-
   .article-header {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 1rem;
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 0.5px solid var(--color-border);
   }
 
   .article-header h1 {
     margin: 0 0 1rem 0;
-    font-size: 2rem;
+    font-size: 32px;
   }
 
-  .article-header time {
-    color: #666;
-    font-size: 0.9rem;
+  .news-image {
+    width: 600px;
   }
 
   .article-content {
+    width: 90%;
+    max-width: 800px;
     line-height: 1.8;
-  }
-
-  .article-content h1,
-  .article-content h2,
-  .article-content h3 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .article-content p {
-    margin-bottom: 1rem;
-  }
-
-  .article-content ul,
-  .article-content ol {
-    margin-bottom: 1rem;
-    padding-left: 2rem;
-  }
-
-  .article-content li {
-    margin-bottom: 0.5rem;
-  }
-
-  .article-content a {
-    color: #0066cc;
-    text-decoration: none;
-  }
-
-  .article-content a:hover {
-    text-decoration: underline;
-  }
-
-  .article-nav {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
-  }
-
-  .back-to-news {
-    color: #666;
-    text-decoration: none;
-  }
-
-  .back-to-news:hover {
-    text-decoration: underline;
+    margin-bottom: 16px;
   }
 
   @media (max-width: 700px) {
-    main {
-      padding: 1rem;
+    .article-header {
+      gap: 0px;
     }
 
     .article-header h1 {
-      font-size: 1.5rem;
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+
+    .news-image {
+      width: 375px;
     }
   }
 </style>

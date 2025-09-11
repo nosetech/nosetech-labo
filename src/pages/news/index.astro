@@ -1,6 +1,5 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import DefaultNewsImage from "@assets/default-news-image.png";
 import NewsHeader from "@components/molecules/NewsHeader.astro";
 
 // すべてのニュース記事を取得
@@ -8,6 +7,7 @@ const allPosts = await Astro.glob<{
   title: string;
   type: string;
   date: string;
+  image: string;
   description: string;
 }>("./posts/*.{md,mdx}");
 
@@ -20,7 +20,10 @@ const sortedPosts = allPosts.sort((a, b) => {
 });
 ---
 
-<Layout title="News & Update">
+<Layout
+  title="News & Update"
+  desciption="Latest news and updates from NOSETECH LABO"
+>
   <div class="section-stack">
     <h1>News & Update</h1>
     <div class="news-list">
@@ -34,7 +37,7 @@ const sortedPosts = allPosts.sort((a, b) => {
               />
               <div class="news-item-body">
                 <img
-                  src={DefaultNewsImage.src}
+                  src={post.frontmatter.image ?? "/news/default-news-image.png"}
                   alt="news image"
                   width="200px"
                 />

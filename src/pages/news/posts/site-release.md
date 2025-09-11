@@ -3,6 +3,7 @@ layout: "@layouts/NewsLayout.astro"
 title: "サイトリリース!!"
 type: "News"
 date: "2025-01-01"
+image: "/news/default-news-image.png"
 description: "NOSETECH LABOのWebサイトをリリースしました。技術情報やプロダクトについて発信していきます。"
 ---
 

@@ -3,6 +3,7 @@ layout: "@layouts/NewsLayout.astro"
 title: "プロダクトにRightCheatをリリースしました。"
 type: "News"
 date: "2025-01-10"
+image: "/news/default-news-image.png"
 description: "macOS向けのキーボードショートカットヘルパーアプリケーション「RightCheat」をリリースしました。"
 ---
 
