@@ -1,0 +1,155 @@
+---
+import Layout from "@layouts/Layout.astro";
+import NewsHeader from "@components/molecules/NewsHeader.astro";
+
+// すべてのニュース記事を取得
+const allPosts = await Astro.glob<{
+  title: string;
+  type: string;
+  date: string;
+  image: string;
+  description: string;
+}>("./posts/*.{md,mdx}");
+
+// 日付でソート（新しい順）
+const sortedPosts = allPosts.sort((a, b) => {
+  return (
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+  );
+});
+---
+
+<Layout
+  title="News & Update"
+  desciption="Latest news and updates from NOSETECH LABO"
+>
+  <div class="section-stack">
+    <h1>News & Update</h1>
+    <div class="news-list">
+      {
+        sortedPosts.map((post) => (
+          <a href={post.url}>
+            <article class="news-item">
+              <NewsHeader
+                type={post.frontmatter.type}
+                date={post.frontmatter.date}
+              />
+              <div class="news-item-body">
+                <img
+                  src={post.frontmatter.image ?? "/news/default-news-image.png"}
+                  alt="news image"
+                  width="200px"
+                />
+                <div class="news-item-content">
+                  <h2> {post.frontmatter.title}</h2>
+                  <p class="description">{post.frontmatter.description}</p>
+                </div>
+              </div>
+            </article>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .section-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 32px;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  .news-list {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .news-list a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .news-item {
+    max-width: 800px;
+    border: 0.5px solid;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 20%);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .news-item:hover {
+    transform: scale(1.02);
+  }
+
+  .news-item-body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .news-item-body img {
+    border: 0.5px solid var(--color-border);
+  }
+
+  .news-item-content {
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 4px;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 0px;
+  }
+
+  .description {
+    font-size: 16px;
+    margin: 0px;
+  }
+
+  @media (max-width: 700px) {
+    .section-stack {
+      gap: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    .news-list {
+      max-width: 368px;
+      padding: 4px;
+    }
+
+    .news-item-body {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    .description {
+      font-size: 14px;
+    }
+  }
+</style>

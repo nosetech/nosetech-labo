@@ -1,0 +1,18 @@
+---
+const props = Astro.props;
+---
+
+<a {...props} target="_blank">
+  <slot />
+</a>
+
+<style>
+  a {
+    color: var(--color-link);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--color-selectedlink);
+  }
+</style>
