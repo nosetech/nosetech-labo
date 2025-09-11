@@ -1,0 +1,50 @@
+---
+import DateStr from "@components/atoms/DateStr.astro";
+
+const { type, date } = Astro.props;
+---
+
+<div class="news-item-header">
+  <div class={`news-type ${type === "Update" ? "update-type" : ""}`}>
+    {" "}
+    {type}
+  </div>
+  <DateStr class="news-date" date={date} />
+</div>
+
+<style>
+  .news-item-header {
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .news-type {
+    font-size: 20px;
+    color: black;
+    width: 100px;
+    border-radius: 16px;
+    background: #f0d1d1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .update-type {
+    background: #d3e5c6;
+  }
+
+  @media (max-width: 700px) {
+    .news-item-header {
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .news-type {
+      font-size: 15px;
+      width: 74px;
+    }
+  }
+</style>

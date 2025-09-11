@@ -1,10 +1,12 @@
 ---
+import DateStr from "@components/atoms/DateStr.astro";
+
 // 最新ニュース3件を取得
 const allPosts = await Astro.glob<{
   title: string;
   date: string;
   description: string;
-}>("../pages/news/posts/*.{md,mdx}");
+}>("../../pages/news/posts/*.{md,mdx}");
 
 // 日付でソート（新しい順）して最新3件を取得
 const latestPosts = allPosts
@@ -27,11 +29,7 @@ const maxLength = 3;
           <a href={post.url}>
             <div class="news-item">
               <div>
-                {new Date(post.frontmatter.date).toLocaleDateString("ja-JP", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                })}
+                <DateStr date={post.frontmatter.date} />
               </div>
               <div>{post.frontmatter.title}</div>
             </div>
@@ -60,6 +58,7 @@ const maxLength = 3;
   }
 
   li {
+    font-size: 16px;
     list-style: none;
   }
 
