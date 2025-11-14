@@ -2,7 +2,7 @@
 layout: "@layouts/PortfolioLayout.astro"
 title: "RightCheat"
 date: "2025-01-01"
-icon: "/portfolio/rightcheat/icon.png"
+icon: "portfolio/rightcheat/icon.svg"
 image:
   [
     "portfolio/rightcheat/rightcheat_light.png",
