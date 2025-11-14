@@ -1,0 +1,20 @@
+---
+layout: "@layouts/PortfolioLayout.astro"
+title: "RightCheat"
+date: "2025-01-01"
+icon: "/portfolio/rightcheat/icon.png"
+image:
+  [
+    "portfolio/rightcheat/rightcheat_light.png",
+    "portfolio/rightcheat/rightcheat_dark.png",
+  ]
+description: "NOSETECH LABOのWebサイトをリリースしました。技術情報やプロダクトについて発信していきます。"
+---
+
+# Concept
+
+# Technology
+
+# Github
+
+https://github.com/nosetech/right-cheat

@@ -1,0 +1,87 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+    icon: string;
+    image: string[];
+    description: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout
+  title={`${frontmatter.title} | Portfolio`}
+  description={frontmatter.description}
+>
+  <article class="news-article">
+    <header class="article-header">
+      <div class="news-image">
+        <img src={frontmatter.icon} alt="news image" width="100%" />
+      </div>
+      <h1>{frontmatter.title}</h1>
+    </header>
+    <div class="product-image">
+      <img src={`/${frontmatter.image[0]}`} alt="product image" width="100%" />
+    </div>
+    <div class="article-content">
+      <slot />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .news-article {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .article-header {
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .article-header h1 {
+    margin: 0 0 1rem 0;
+    font-size: 32px;
+  }
+
+  .news-image {
+    width: 80px;
+  }
+
+  .product-image {
+    width: 50%;
+    margin-top: 16px;
+  }
+
+  .article-content {
+    width: 90%;
+    max-width: 800px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 700px) {
+    .article-header {
+      gap: 8px;
+    }
+
+    .article-header h1 {
+      font-size: 24px;
+    }
+
+    .news-image {
+      width: 60px;
+    }
+  }
+</style>
