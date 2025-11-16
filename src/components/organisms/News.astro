@@ -1,12 +1,15 @@
 ---
+import type { MarkdownInstance } from "astro";
 import DateStr from "@components/atoms/DateStr.astro";
 
 // 最新ニュース3件を取得
-const allPosts = await Astro.glob<{
-  title: string;
-  date: string;
-  description: string;
-}>("../../pages/news/posts/*.{md,mdx}");
+const allPosts = await Astro.glob<
+  MarkdownInstance<{
+    title: string;
+    date: string;
+    description: string;
+  }>
+>("../../pages/news/posts/*.{md,mdx}");
 
 // 日付でソート（新しい順）して最新3件を取得
 const latestPosts = allPosts

@@ -1,15 +1,18 @@
 ---
+import type { MarkdownInstance } from "astro";
 import Layout from "@layouts/Layout.astro";
 import NewsHeader from "@components/molecules/NewsHeader.astro";
 
 // すべてのニュース記事を取得
-const allPosts = await Astro.glob<{
-  title: string;
-  type: string;
-  date: string;
-  image: string;
-  description: string;
-}>("./posts/*.{md,mdx}");
+const allPosts = await Astro.glob<
+  MarkdownInstance<{
+    title: string;
+    type: string;
+    date: string;
+    image: string;
+    description: string;
+  }>
+>("./posts/*.{md,mdx}");
 
 // 日付でソート（新しい順）
 const sortedPosts = allPosts.sort((a, b) => {
@@ -22,7 +25,7 @@ const sortedPosts = allPosts.sort((a, b) => {
 
 <Layout
   title="News & Update"
-  desciption="Latest news and updates from NOSETECH LABO"
+  description="Latest news and updates from NOSETECH LABO"
 >
   <div class="section-stack">
     <h1>News & Update</h1>

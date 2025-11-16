@@ -1,0 +1,253 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import type { ImageMetadata } from "astro";
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+    icon: string;
+    image: string[];
+    description: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+// src/assets配下のすべての画像をインポート
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/**/*.{jpeg,jpg,png,gif,webp,svg}",
+);
+
+// frontmatterから受け取ったパスをもとに画像をロード
+const getImage = async (imagePath: string) => {
+  const fullPath = `/src/assets/${imagePath}`;
+  if (fullPath in images) {
+    return (await images[fullPath]()).default;
+  }
+  return null;
+};
+
+const iconImage = await getImage(frontmatter.icon);
+const productImage = frontmatter.image[0]
+  ? await getImage(frontmatter.image[0])
+  : null;
+
+// ポートフォリオページの一覧を取得
+const portfolioPages = await Astro.glob("../pages/portfolio/*.md");
+const sortedPortfolioPages = portfolioPages
+  .map((module) => ({
+    frontmatter: module.frontmatter,
+    url: module.url || "",
+  }))
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime(),
+  );
+
+// 現在のページURL
+const currentPageUrl = Astro.url.pathname;
+---
+
+<Layout
+  title={`${frontmatter.title} | Portfolio`}
+  description={frontmatter.description}
+>
+  <div class="portfolio-container">
+    <aside class="portfolio-nav">
+      <nav class="portfolio-nav-list">
+        {
+          sortedPortfolioPages.map(async (page) => {
+            const pageIconImage = await getImage(page.frontmatter.icon);
+            const isActive = currentPageUrl === page.url;
+
+            return (
+              <a
+                href={page.url}
+                class={`portfolio-nav-item ${isActive ? "active" : ""}`}
+                title={page.frontmatter.title}
+              >
+                {pageIconImage ? (
+                  <Image
+                    src={pageIconImage}
+                    alt={page.frontmatter.title}
+                    width={60}
+                    height={60}
+                    loading="lazy"
+                  />
+                ) : (
+                  <img
+                    src={page.frontmatter.icon}
+                    alt={page.frontmatter.title}
+                    width="60"
+                  />
+                )}
+              </a>
+            );
+          })
+        }
+      </nav>
+    </aside>
+
+    <article class="news-article">
+      <header class="article-header">
+        <div class="news-image">
+          <Image
+            src={iconImage!}
+            alt="news image"
+            width={80}
+            height={80}
+            loading="lazy"
+          />
+        </div>
+        <h1>{frontmatter.title}</h1>
+      </header>
+      <div class="product-image">
+        <Image
+          src={productImage!}
+          alt="product image"
+          width={1000}
+          loading="lazy"
+        />
+      </div>
+      <div class="article-content">
+        <slot />
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .portfolio-container {
+    display: flex;
+    gap: 24px;
+    padding: 0 16px;
+  }
+
+  .portfolio-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    height: fit-content;
+  }
+
+  .portfolio-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .portfolio-nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .portfolio-nav-item:hover {
+    border-color: var(--primary-accent-color);
+    transform: scale(1.05);
+  }
+
+  .portfolio-nav-item.active {
+    border-color: var(--primary-accent-color);
+    background-color: var(--primary-accent-color-alpha);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .portfolio-nav-item img,
+  .portfolio-nav-item :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .news-article {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+
+  .article-header {
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .article-header h1 {
+    margin: 0 0 1rem 0;
+    font-size: 32px;
+  }
+
+  .news-image {
+    width: 80px;
+  }
+
+  .product-image {
+    width: 50%;
+    margin-top: 16px;
+  }
+
+  .article-content {
+    width: 90%;
+    max-width: 800px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 700px) {
+    .portfolio-container {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .portfolio-nav {
+      position: static;
+      flex-direction: row;
+      justify-content: center;
+      padding: 16px 0;
+      overflow-x: auto;
+    }
+
+    .portfolio-nav-list {
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .portfolio-nav-item {
+      width: 60px;
+      height: 60px;
+    }
+
+    .article-header {
+      gap: 8px;
+    }
+
+    .article-header h1 {
+      font-size: 24px;
+    }
+
+    .news-image {
+      width: 60px;
+    }
+  }
+</style>
