@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
+import CarouselSplide from "@components/CarouselSplide.astro";
 import type { ImageMetadata } from "astro";
 
 export interface Props {
@@ -30,9 +31,18 @@ const getImage = async (imagePath: string) => {
 };
 
 const iconImage = await getImage(frontmatter.icon);
-const productImage = frontmatter.image[0]
-  ? await getImage(frontmatter.image[0])
-  : null;
+
+// 複数の画像をロード
+const productImages = await Promise.all(
+  frontmatter.image.map((imagePath) => getImage(imagePath)),
+);
+
+// nullでない画像のみをフィルタリング
+const validProductImages = productImages.filter(
+  (img) => img !== null,
+) as ImageMetadata[];
+const hasMultipleImages = validProductImages.length > 1;
+const productImage = validProductImages[0] || null;
 
 // ポートフォリオページの一覧を取得
 const portfolioPages = await Astro.glob("../pages/portfolio/*.md");
@@ -105,12 +115,67 @@ const currentPageUrl = Astro.url.pathname;
         <h1>{frontmatter.title}</h1>
       </header>
       <div class="product-image">
-        <Image
-          src={productImage!}
-          alt="product image"
-          width={1000}
-          loading="lazy"
-        />
+        {
+          hasMultipleImages ? (
+            <>
+              <div class="splide" role="region" aria-label="Product carousel">
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    {validProductImages.map((img, index) => (
+                      <li class="splide__slide">
+                        <Image
+                          src={img}
+                          alt={`product image ${index + 1}`}
+                          width={1000}
+                          loading="lazy"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="splide__arrows">
+                  <button
+                    class="splide__arrow splide__arrow--prev"
+                    type="button"
+                  >
+                    <span class="sr-only">Previous slide</span>
+                  </button>
+                  <button
+                    class="splide__arrow splide__arrow--next"
+                    type="button"
+                  >
+                    <span class="sr-only">Next slide</span>
+                  </button>
+                </div>
+
+                <ul class="splide__pagination" role="tablist" />
+
+                <div class="carousel-thumbnails">
+                  {validProductImages.map((img, index) => (
+                    <div class="thumbnail" data-index={index}>
+                      <Image
+                        src={img}
+                        alt={`Thumbnail ${index + 1}`}
+                        width={100}
+                        height={100}
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <CarouselSplide images={validProductImages} />
+            </>
+          ) : (
+            <Image
+              src={productImage!}
+              alt="product image"
+              width={1000}
+              loading="lazy"
+            />
+          )
+        }
       </div>
       <div class="article-content">
         <slot />
@@ -210,6 +275,148 @@ const currentPageUrl = Astro.url.pathname;
     margin-top: 16px;
   }
 
+  /* Splide Carousel Styles */
+  .splide {
+    width: 100%;
+  }
+
+  .splide__track {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .splide__list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .splide__slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+  }
+
+  .splide__slide :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .splide__arrows {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .splide__arrow {
+    background-color: var(--primary-accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.3s ease;
+  }
+
+  .splide__arrow:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .splide__arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .splide__arrow--prev::before {
+    content: "◀";
+  }
+
+  .splide__arrow--next::before {
+    content: "▶";
+  }
+
+  .splide__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    list-style: none;
+    margin: 16px 0 0 0;
+    padding: 0;
+  }
+
+  .splide__pagination__page {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .splide__pagination__page.is-active {
+    background-color: var(--primary-accent-color);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .carousel-thumbnails {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .thumbnail:hover {
+    border-color: var(--primary-accent-color);
+    transform: scale(1.05);
+  }
+
+  .thumbnail.active {
+    border-color: var(--primary-accent-color);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .thumbnail :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
   .article-content {
     width: 90%;
     max-width: 800px;
@@ -251,6 +458,19 @@ const currentPageUrl = Astro.url.pathname;
 
     .news-image {
       width: 60px;
+    }
+
+    .product-image {
+      width: 100%;
+    }
+
+    .carousel-thumbnails {
+      gap: 8px;
+    }
+
+    .thumbnail {
+      width: 60px;
+      height: 60px;
     }
   }
 </style>
