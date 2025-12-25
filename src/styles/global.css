@@ -9,6 +9,8 @@
   --color-selectedlink: #000000;
   --color-border: #e0e0e0;
   --color-disabletext: #c0c0c0;
+  --primary-accent-color: #0066cc;
+  --primary-accent-color-alpha: rgba(0, 102, 204, 0.1);
 }
 
 [data-theme="dark"] {
@@ -22,6 +24,8 @@
   --color-selectedlink: #ffffff;
   --color-border: #404040;
   --color-disabletext: #707070;
+  --primary-accent-color: #4a9eff;
+  --primary-accent-color-alpha: rgba(74, 158, 255, 0.1);
 }
 
 html {
