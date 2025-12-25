@@ -4,50 +4,65 @@ import { Image } from "astro:assets";
 const { images } = Astro.props;
 ---
 
-<div class="splide" role="region" aria-label="Product carousel">
-  <div class="splide__track">
-    <ul class="splide__list">
-      {
-        images.map((img, index) => (
-          <li class="splide__slide">
-            <Image
-              src={img}
-              alt={`product image ${index + 1}`}
-              width={1000}
-              loading="lazy"
-            />
-          </li>
-        ))
-      }
-    </ul>
+<div class="carousel-container">
+  <div class="main-slider splide" id="main-slider">
+    <div class="splide__track">
+      <ul class="splide__list">
+        {
+          images.map((img, index) => (
+            <li class="splide__slide">
+              <Image
+                src={img}
+                alt={`product image ${index + 1}`}
+                width={1000}
+                loading="lazy"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 
-  <div class="splide__arrows">
-    <button class="splide__arrow splide__arrow--prev" type="button">
-      <span class="sr-only">Previous slide</span>
-    </button>
-    <button class="splide__arrow splide__arrow--next" type="button">
-      <span class="sr-only">Next slide</span>
-    </button>
-  </div>
+  {
+    images.length > 1 && (
+      <div class="thumbnail-container">
+        <button
+          class="thumbnail-nav thumbnail-nav--prev"
+          type="button"
+          aria-label="Previous slide"
+        >
+          ←
+        </button>
 
-  <ul class="splide__pagination" role="tablist"></ul>
-
-  <div class="carousel-thumbnails">
-    {
-      images.map((img, index) => (
-        <div class="thumbnail" data-index={index}>
-          <Image
-            src={img}
-            alt={`Thumbnail ${index + 1}`}
-            width={100}
-            height={100}
-            loading="lazy"
-          />
+        <div class="thumbnail-slider splide" id="thumbnail-slider">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {images.map((img, index) => (
+                <li class="splide__slide">
+                  <Image
+                    src={img}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={100}
+                    height={100}
+                    loading="lazy"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      ))
-    }
-  </div>
+
+        <button
+          class="thumbnail-nav thumbnail-nav--next"
+          type="button"
+          aria-label="Next slide"
+        >
+          →
+        </button>
+      </div>
+    )
+  }
 </div>
 
 <script>
@@ -55,42 +70,74 @@ const { images } = Astro.props;
   import "@splidejs/splide/css";
 
   function initCarousel() {
-    const splideElement = document.querySelector(".splide");
-    if (!splideElement) return;
+    const mainElement = document.querySelector("#main-slider");
+    if (!mainElement) return;
 
-    const splide = new Splide(splideElement, {
+    // Main slider configuration
+    const main = new Splide(mainElement, {
       type: "fade",
       rewind: true,
-      pagination: true,
-      arrows: true,
-      autoplay: false,
+      pagination: false,
+      arrows: false,
+      cover: true,
     });
 
-    splide.mount();
+    const thumbnailElement = document.querySelector("#thumbnail-slider");
 
-    const thumbnails = document.querySelectorAll(".thumbnail");
-    thumbnails.forEach((thumbnail, index) => {
-      thumbnail.addEventListener("click", () => {
-        splide.go(index);
+    // If no thumbnail slider, just mount the main slider
+    if (!thumbnailElement) {
+      main.mount();
+      return;
+    }
+
+    // Thumbnail slider configuration
+    const thumbnails = new Splide(thumbnailElement, {
+      rewind: true,
+      fixedWidth: 104,
+      fixedHeight: 80,
+      isNavigation: true,
+      gap: 10,
+      focus: "center",
+      pagination: false,
+      arrows: false,
+      cover: true,
+      dragMinThreshold: {
+        mouse: 4,
+        touch: 10,
+      },
+      breakpoints: {
+        700: {
+          fixedWidth: 80,
+          fixedHeight: 64,
+        },
+      },
+    });
+
+    // Sync main and thumbnails
+    main.sync(thumbnails);
+
+    // Mount both sliders
+    main.mount();
+    thumbnails.mount();
+
+    // Setup navigation buttons
+    const prevButton = document.querySelector(".thumbnail-nav--prev");
+    const nextButton = document.querySelector(".thumbnail-nav--next");
+
+    if (prevButton) {
+      prevButton.addEventListener("click", () => {
+        thumbnails.go("-");
       });
-    });
+    }
 
-    splide.on("moved", () => {
-      const currentIndex = splide.index;
-      thumbnails.forEach((thumbnail, index) => {
-        if (index === currentIndex) {
-          thumbnail.classList.add("active");
-        } else {
-          thumbnail.classList.remove("active");
-        }
+    if (nextButton) {
+      nextButton.addEventListener("click", () => {
+        thumbnails.go("+");
       });
-    });
-
-    if (thumbnails.length > 0) {
-      thumbnails[0].classList.add("active");
     }
   }
 
+  // Initialize when DOM is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initCarousel);
   } else {
@@ -99,50 +146,107 @@ const { images } = Astro.props;
 </script>
 
 <style>
-  .splide {
+  .carousel-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .main-slider {
     width: 100%;
   }
 
-  .splide__track {
+  .main-slider .splide__track {
     position: relative;
     width: 100%;
     overflow: hidden;
-    min-height: 400px;
     border-radius: 8px;
     background-color: var(--color-secondary);
+    min-height: 400px;
   }
 
-  .splide__list {
+  .main-slider .splide__list {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .splide__slide {
+  .main-slider .splide__slide {
     flex: 0 0 100%;
     width: 100%;
-    height: auto;
+    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .splide__slide :global(img) {
+  .main-slider .splide__slide :global(img) {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
   }
 
-  .splide__arrows {
+  .thumbnail-container {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 16px;
-    margin-top: 24px;
+    gap: 12px;
   }
 
-  .splide__arrow {
+  .thumbnail-slider {
+    flex: 1;
+  }
+
+  .thumbnail-slider .splide__track {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .thumbnail-slider .splide__list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .thumbnail-slider .splide__slide {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .thumbnail-slider .splide__slide:hover {
+    border-color: var(--primary-accent-color);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .thumbnail-slider .splide__slide.is-active {
+    border-color: var(--primary-accent-color);
+    border-width: 3px;
+    box-shadow:
+      0 0 0 1px var(--primary-accent-color),
+      0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .thumbnail-slider .splide__slide :global(img) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .thumbnail-nav {
     background-color: var(--primary-accent-color);
     color: white;
     border: none;
@@ -156,149 +260,40 @@ const { images } = Astro.props;
     font-size: 20px;
     transition: all 0.2s ease;
     font-weight: bold;
+    flex-shrink: 0;
   }
 
-  .splide__arrow:hover {
+  .thumbnail-nav:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: var(--primary-accent-color);
   }
 
-  .splide__arrow:active {
+  .thumbnail-nav:active {
     transform: translateY(0);
   }
 
-  .splide__arrow:disabled {
+  .thumbnail-nav:disabled {
     opacity: 0.4;
     cursor: not-allowed;
   }
 
-  .splide__arrow--prev::before {
-    content: "←";
-  }
-
-  .splide__arrow--next::before {
-    content: "→";
-  }
-
-  .splide__pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    list-style: none;
-    margin: 24px 0 0 0;
-    padding: 0;
-  }
-
-  .splide__pagination__page {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: var(--color-border);
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .splide__pagination__page:hover {
-    background-color: #999;
-  }
-
-  .splide__pagination__page.is-active {
-    background-color: var(--primary-accent-color);
-    width: 28px;
-    border-radius: 5px;
-  }
-
-  .carousel-thumbnails {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 24px;
-    flex-wrap: wrap;
-  }
-
-  .thumbnail {
-    width: 90px;
-    height: 90px;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 2px solid var(--color-border);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: var(--color-bg);
-  }
-
-  .thumbnail:hover {
-    border-color: var(--primary-accent-color);
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  .thumbnail.active {
-    border-color: var(--primary-accent-color);
-    border-width: 3px;
-    box-shadow:
-      0 0 0 1px var(--primary-accent-color),
-      0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .thumbnail :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
   @media (max-width: 700px) {
-    .splide__track {
+    .carousel-container {
+      gap: 16px;
+    }
+
+    .main-slider .splide__track {
       min-height: 300px;
     }
 
-    .splide__arrows {
-      gap: 12px;
-      margin-top: 16px;
+    .thumbnail-container {
+      gap: 8px;
     }
 
-    .splide__arrow {
+    .thumbnail-nav {
       width: 40px;
       height: 40px;
       font-size: 18px;
-    }
-
-    .carousel-thumbnails {
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .thumbnail {
-      width: 70px;
-      height: 70px;
-    }
-
-    .splide__pagination {
-      margin-top: 16px;
-      gap: 6px;
-    }
-
-    .splide__pagination__page {
-      width: 8px;
-      height: 8px;
-    }
-
-    .splide__pagination__page.is-active {
-      width: 24px;
     }
   }
 </style>
