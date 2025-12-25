@@ -424,6 +424,23 @@ const currentPageUrl = Astro.url.pathname;
     margin-bottom: 16px;
   }
 
+  .article-content a:link {
+    color: var(--color-link);
+    text-decoration: underline;
+  }
+
+  .article-content a:visited {
+    color: var(--color-visited-link);
+  }
+
+  .article-content a:hover {
+    color: var(--color-selectedlink);
+  }
+
+  .article-content a:active {
+    color: var(--color-active-link);
+  }
+
   @media (max-width: 700px) {
     .portfolio-container {
       flex-direction: column;

@@ -1,10 +1,14 @@
-# CLAUDE.md
-
-このファイルは、Claude Code (claude.ai/code) がこのリポジトリのコードを扱う際のガイダンスを提供します。
+# NOSETECH LABO Project
 
 ## プロジェクト概要
 
-これはMDX統合を持つAstroプロジェクトで、Astro basics starter templateから作成されました。このプロジェクトは厳格な構成のTypeScriptとパッケージマネージャーとしてYarnを使用しています。
+活動内容を紹介するためのWebサイトを作成する。
+
+- 開発しているツールなどをポートフォリオとして紹介する。
+- ツールの開発状況や、IT技術の調査結果などをブログとして紹介する。
+- ITエンジニアとしてのスキルや経歴などを紹介する。
+
+MDX統合を持つAstroプロジェクトで、Astro basics starter templateから作成されました。このプロジェクトは厳格な構成のTypeScriptとパッケージマネージャーとしてYarnを使用しています。
 
 ## 開発コマンド
 

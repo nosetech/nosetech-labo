@@ -4,6 +4,8 @@
   --color-primary: #0066cc;
   --color-secondary: #f5f5f5;
   --color-link: #0040ff;
+  --color-visited-link: #9370db;
+  --color-active-link: #0030cc;
   --color-selectedlink: #000000;
   --color-border: #e0e0e0;
   --color-disabletext: #c0c0c0;
@@ -14,7 +16,9 @@
   --color-text: #e5e5e5;
   --color-primary: #4a9eff;
   --color-secondary: #2a2a2a;
-  --color-link: #009dff;
+  --color-link: #4db3ff;
+  --color-visited-link: #a08bcc;
+  --color-active-link: #2fa3ff;
   --color-selectedlink: #ffffff;
   --color-border: #404040;
   --color-disabletext: #707070;
