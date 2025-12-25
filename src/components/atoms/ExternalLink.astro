@@ -7,12 +7,20 @@ const props = Astro.props;
 </a>
 
 <style>
-  a {
+  a:link {
     color: var(--color-link);
     text-decoration: underline;
   }
 
+  a:visited {
+    color: var(--color-visited-link);
+  }
+
   a:hover {
     color: var(--color-selectedlink);
+  }
+
+  a:active {
+    color: var(--color-active-link);
   }
 </style>
