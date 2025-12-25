@@ -284,6 +284,7 @@ const currentPageUrl = Astro.url.pathname;
     position: relative;
     width: 100%;
     overflow: hidden;
+    min-height: 400px;
   }
 
   .splide__list {
@@ -297,6 +298,9 @@ const currentPageUrl = Astro.url.pathname;
     flex: 0 0 100%;
     width: 100%;
     height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .splide__slide :global(img) {

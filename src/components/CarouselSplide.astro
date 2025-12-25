@@ -12,6 +12,7 @@ const { images: _images } = Astro.props;
 
 <script>
   import Splide from "@splidejs/splide";
+  import "@splidejs/splide/css";
 
   // Splideの初期化
   function initCarousel() {
@@ -37,9 +38,10 @@ const { images: _images } = Astro.props;
     });
 
     // Splideのスライド変更イベント
-    splide.on("moved", (newIndex: number) => {
+    splide.on("moved", () => {
+      const currentIndex = splide.index;
       thumbnails.forEach((thumbnail, index) => {
-        if (index === newIndex) {
+        if (index === currentIndex) {
           thumbnail.classList.add("active");
         } else {
           thumbnail.classList.remove("active");
