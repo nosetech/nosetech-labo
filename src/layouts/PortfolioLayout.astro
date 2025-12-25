@@ -45,7 +45,7 @@ const hasMultipleImages = validProductImages.length > 1;
 const productImage = validProductImages[0] || null;
 
 // ポートフォリオページの一覧を取得
-const portfolioPages = await Astro.glob("../pages/portfolio/*.md");
+const portfolioPages = await Astro.glob("../pages/portfolio/*.mdx");
 const sortedPortfolioPages = portfolioPages
   .map((module) => ({
     frontmatter: module.frontmatter,
