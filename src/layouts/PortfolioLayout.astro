@@ -219,11 +219,13 @@ const currentPageUrl = Astro.url.pathname;
 
   .news-image {
     width: 80px;
+    flex-shrink: 0;
   }
 
   .product-image {
-    width: 50%;
-    margin-top: 16px;
+    width: 90%;
+    max-width: 900px;
+    margin-top: 20px;
   }
 
   .article-content {
@@ -231,6 +233,7 @@ const currentPageUrl = Astro.url.pathname;
     max-width: 800px;
     line-height: 1.8;
     margin-bottom: 16px;
+    font-size: 16px;
   }
 
   .article-content a:link {
@@ -250,44 +253,107 @@ const currentPageUrl = Astro.url.pathname;
     color: var(--color-active-link);
   }
 
+  /* タブレット対応: 700px ~ 1024px */
+  @media (max-width: 1024px) {
+    .portfolio-container {
+      gap: 20px;
+      padding: 0 12px;
+    }
+
+    .portfolio-nav {
+      gap: 12px;
+    }
+
+    .portfolio-nav-item {
+      width: 80px;
+      height: 80px;
+      padding: 12px;
+    }
+
+    .article-header {
+      gap: 12px;
+    }
+
+    .article-header h1 {
+      font-size: 28px;
+    }
+
+    .news-image {
+      width: 70px;
+    }
+
+    .product-image {
+      width: 85%;
+      max-width: 700px;
+    }
+
+    .article-content {
+      width: 85%;
+      font-size: 15px;
+    }
+  }
+
+  /* モバイル対応: ~700px */
   @media (max-width: 700px) {
     .portfolio-container {
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      padding: 0 12px;
     }
 
     .portfolio-nav {
       position: static;
       flex-direction: row;
       justify-content: center;
-      padding: 16px 0;
+      padding: 12px 0;
       overflow-x: auto;
+      gap: 10px;
     }
 
     .portfolio-nav-list {
       flex-direction: row;
-      gap: 12px;
+      gap: 10px;
     }
 
     .portfolio-nav-item {
       width: 60px;
       height: 60px;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .news-article {
+      margin-top: 12px;
     }
 
     .article-header {
-      gap: 8px;
+      width: 100%;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .article-header h1 {
-      font-size: 24px;
+      font-size: 22px;
+      margin: 0;
+      width: 100%;
     }
 
     .news-image {
-      width: 60px;
+      width: 50px;
     }
 
     .product-image {
       width: 100%;
+      max-width: 100%;
+      margin-top: 12px;
+    }
+
+    .article-content {
+      width: 100%;
+      max-width: 100%;
+      font-size: 14px;
+      padding: 0;
+      margin-bottom: 12px;
     }
   }
 </style>
