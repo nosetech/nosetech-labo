@@ -83,8 +83,6 @@ const currentPageUrl = Astro.url.pathname;
                   <Image
                     src={pageIconImage}
                     alt={page.frontmatter.title}
-                    width={60}
-                    height={60}
                     loading="lazy"
                   />
                 ) : (
@@ -101,16 +99,10 @@ const currentPageUrl = Astro.url.pathname;
       </nav>
     </aside>
 
-    <article class="news-article">
+    <article class="portfolio-article">
       <header class="article-header">
-        <div class="news-image">
-          <Image
-            src={iconImage!}
-            alt="news image"
-            width={80}
-            height={80}
-            loading="lazy"
-          />
+        <div class="icon-image">
+          <Image src={iconImage!} alt="icon image" loading="lazy" />
         </div>
         <h1>{frontmatter.title}</h1>
       </header>
@@ -119,12 +111,7 @@ const currentPageUrl = Astro.url.pathname;
           hasMultipleImages ? (
             <Carousel images={validProductImages} />
           ) : (
-            <Image
-              src={productImage!}
-              alt="product image"
-              width={1000}
-              loading="lazy"
-            />
+            <Image src={productImage!} alt="product image" loading="lazy" />
           )
         }
       </div>
@@ -195,7 +182,7 @@ const currentPageUrl = Astro.url.pathname;
     object-fit: cover;
   }
 
-  .news-article {
+  .portfolio-article {
     margin-top: 16px;
     display: flex;
     flex-direction: column;
@@ -204,12 +191,12 @@ const currentPageUrl = Astro.url.pathname;
   }
 
   .article-header {
-    width: 90%;
-    max-width: 800px;
+    width: 70%;
+    max-width: 1200px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
   }
 
   .article-header h1 {
@@ -217,20 +204,21 @@ const currentPageUrl = Astro.url.pathname;
     font-size: 32px;
   }
 
-  .news-image {
+  .icon-image {
     width: 80px;
-    flex-shrink: 0;
   }
 
   .product-image {
-    width: 90%;
+    width: 70%;
     max-width: 900px;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
   }
 
   .article-content {
-    width: 90%;
-    max-width: 800px;
+    width: 70%;
+    max-width: 1200px;
     line-height: 1.8;
     margin-bottom: 16px;
     font-size: 16px;
@@ -270,25 +258,15 @@ const currentPageUrl = Astro.url.pathname;
       padding: 12px;
     }
 
-    .article-header {
-      gap: 12px;
-    }
-
     .article-header h1 {
       font-size: 28px;
     }
 
-    .news-image {
-      width: 70px;
-    }
-
-    .product-image {
-      width: 85%;
-      max-width: 700px;
+    .icon-image {
+      width: 60px;
     }
 
     .article-content {
-      width: 85%;
       font-size: 15px;
     }
   }
@@ -322,29 +300,24 @@ const currentPageUrl = Astro.url.pathname;
       border-radius: 4px;
     }
 
-    .news-article {
+    .portfolio-article {
       margin-top: 12px;
     }
 
     .article-header {
       width: 100%;
-      gap: 10px;
-      flex-wrap: wrap;
     }
 
     .article-header h1 {
       font-size: 22px;
-      margin: 0;
-      width: 100%;
     }
 
-    .news-image {
-      width: 50px;
+    .icon-image {
+      width: 45px;
     }
 
     .product-image {
       width: 100%;
-      max-width: 100%;
       margin-top: 12px;
     }
 
@@ -354,6 +327,26 @@ const currentPageUrl = Astro.url.pathname;
       font-size: 14px;
       padding: 0;
       margin-bottom: 12px;
+    }
+  }
+</style>
+
+<style is:global>
+  article h1 {
+    font-size: 32px;
+  }
+
+  /* タブレット対応: 700px ~ 1024px */
+  @media (max-width: 1024px) {
+    article h1 {
+      font-size: 28px;
+    }
+  }
+
+  /* モバイル対応: ~700px */
+  @media (max-width: 700px) {
+    article h1 {
+      font-size: 22px;
     }
   }
 </style>

@@ -14,7 +14,6 @@ const { images } = Astro.props;
               <Image
                 src={img}
                 alt={`product image ${index + 1}`}
-                width={1000}
                 loading="lazy"
               />
             </li>
@@ -43,8 +42,6 @@ const { images } = Astro.props;
                   <Image
                     src={img}
                     alt={`Thumbnail ${index + 1}`}
-                    width={100}
-                    height={100}
                     loading="lazy"
                   />
                 </li>
@@ -199,7 +196,7 @@ const { images } = Astro.props;
   .thumbnail-slider .splide__track {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 4px;
   }
 
