@@ -11,6 +11,17 @@
   --color-disabletext: #c0c0c0;
   --primary-accent-color: #0066cc;
   --primary-accent-color-alpha: rgba(0, 102, 204, 0.1);
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-strong: rgba(0, 0, 0, 0.2);
+  --shadow-strongest: rgba(0, 0, 0, 0.25);
+  --color-border-neutral: #a2a2a2;
+  --badge-new-bg: #f0d1d1;
+  --badge-new-text: #000000;
+  --badge-update-bg: #d3e5c6;
+  --badge-update-text: #000000;
+  --brand-portfolio: #73ab69;
+  --brand-about: #8971b5;
 }
 
 [data-theme="dark"] {
@@ -26,6 +37,17 @@
   --color-disabletext: #707070;
   --primary-accent-color: #4a9eff;
   --primary-accent-color-alpha: rgba(74, 158, 255, 0.1);
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-strong: rgba(0, 0, 0, 0.2);
+  --shadow-strongest: rgba(0, 0, 0, 0.25);
+  --color-border-neutral: #6a6a6a;
+  --badge-new-bg: #8b4545;
+  --badge-new-text: #ffffff;
+  --badge-update-bg: #4a6b3d;
+  --badge-update-text: #ffffff;
+  --brand-portfolio: #73ab69;
+  --brand-about: #8971b5;
 }
 
 html {

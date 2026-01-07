@@ -23,17 +23,18 @@ const { type, date } = Astro.props;
 
   .news-type {
     font-size: 20px;
-    color: black;
+    color: var(--badge-new-text);
     width: 100px;
     border-radius: 16px;
-    background: #f0d1d1;
+    background: var(--badge-new-bg);
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .update-type {
-    background: #d3e5c6;
+    background: var(--badge-update-bg);
+    color: var(--badge-update-text);
   }
 
   @media (max-width: 700px) {
