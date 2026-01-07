@@ -221,7 +221,7 @@ const { images } = Astro.props;
   .thumbnail-slider .splide__slide:hover {
     border-color: var(--primary-accent-color);
     transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--shadow-light);
   }
 
   .thumbnail-slider .splide__slide.is-active {
@@ -229,7 +229,7 @@ const { images } = Astro.props;
     border-width: 3px;
     box-shadow:
       0 0 0 1px var(--primary-accent-color),
-      0 4px 12px rgba(0, 0, 0, 0.15);
+      0 4px 12px var(--shadow-medium);
   }
 
   .thumbnail-slider .splide__slide :global(img) {
@@ -258,7 +258,7 @@ const { images } = Astro.props;
 
   .thumbnail-nav:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--shadow-medium);
   }
 
   .thumbnail-nav:active {

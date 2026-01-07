@@ -156,7 +156,7 @@ const currentPageUrl = Astro.url.pathname;
     padding: 16px;
     border-radius: 6px;
     border: 1px solid;
-    border-color: #a2a2a2;
+    border-color: var(--color-border-neutral);
     transition: all 0.3s ease;
     cursor: pointer;
     text-decoration: none;
@@ -172,7 +172,7 @@ const currentPageUrl = Astro.url.pathname;
     border: 2px solid;
     border-color: var(--primary-accent-color);
     background-color: var(--primary-accent-color-alpha);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--shadow-light);
   }
 
   .portfolio-nav-item img,
