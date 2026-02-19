@@ -45,17 +45,33 @@ const hasMultipleImages = validProductImages.length > 1;
 const productImage = validProductImages[0] || null;
 
 // ポートフォリオページの一覧を取得
-const portfolioPages = await Astro.glob("../pages/portfolio/*.mdx");
-const sortedPortfolioPages = portfolioPages
-  .map((module) => ({
-    frontmatter: module.frontmatter,
-    url: module.url || "",
-  }))
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime(),
-  );
+type PortfolioFrontmatter = {
+  title: string;
+  date: string;
+  icon: string;
+  image: string[];
+  description: string;
+};
+
+const portfolioModules = import.meta.glob<{
+  frontmatter: PortfolioFrontmatter;
+}>("../pages/portfolio/*.mdx");
+
+const portfolioPages = await Promise.all(
+  Object.entries(portfolioModules).map(async ([path, loader]) => {
+    const mod = await loader();
+    const url = path
+      .replace(/^\.\.\/pages\/portfolio\//, "/portfolio/")
+      .replace(/\.mdx$/, "");
+    return { frontmatter: mod.frontmatter, url };
+  }),
+);
+
+const sortedPortfolioPages = portfolioPages.sort(
+  (a, b) =>
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime(),
+);
 
 // 現在のページURL
 const currentPageUrl = Astro.url.pathname;

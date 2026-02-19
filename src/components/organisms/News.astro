@@ -1,15 +1,26 @@
 ---
-import type { MarkdownInstance } from "astro";
 import DateStr from "@components/atoms/DateStr.astro";
 
+type PostFrontmatter = {
+  title: string;
+  date: string;
+  description: string;
+};
+
 // 最新ニュース3件を取得
-const allPosts = await Astro.glob<
-  MarkdownInstance<{
-    title: string;
-    date: string;
-    description: string;
-  }>
->("../../pages/news/posts/*.{md,mdx}");
+const postModules = import.meta.glob<{ frontmatter: PostFrontmatter }>(
+  "../../pages/news/posts/*.{md,mdx}",
+);
+
+const allPosts = await Promise.all(
+  Object.entries(postModules).map(async ([path, loader]) => {
+    const mod = await loader();
+    const url = path
+      .replace(/^\.\.\/\.\.\/pages\/news\/posts\//, "/news/posts/")
+      .replace(/\.(md|mdx)$/, "");
+    return { frontmatter: mod.frontmatter, url };
+  }),
+);
 
 // 日付でソート（新しい順）して最新3件を取得
 const latestPosts = allPosts
