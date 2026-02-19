@@ -1,18 +1,29 @@
 ---
-import type { MarkdownInstance } from "astro";
 import Layout from "@layouts/Layout.astro";
 import NewsHeader from "@components/molecules/NewsHeader.astro";
 
+type PostFrontmatter = {
+  title: string;
+  type: string;
+  date: string;
+  image: string;
+  description: string;
+};
+
 // すべてのニュース記事を取得
-const allPosts = await Astro.glob<
-  MarkdownInstance<{
-    title: string;
-    type: string;
-    date: string;
-    image: string;
-    description: string;
-  }>
->("./posts/*.{md,mdx}");
+const postModules = import.meta.glob<{ frontmatter: PostFrontmatter }>(
+  "./posts/*.{md,mdx}",
+);
+
+const allPosts = await Promise.all(
+  Object.entries(postModules).map(async ([path, loader]) => {
+    const mod = await loader();
+    const url = path
+      .replace(/^\.\/posts\//, "/news/posts/")
+      .replace(/\.(md|mdx)$/, "");
+    return { frontmatter: mod.frontmatter, url };
+  }),
+);
 
 // 日付でソート（新しい順）
 const sortedPosts = allPosts.sort((a, b) => {
