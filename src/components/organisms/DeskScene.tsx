@@ -87,7 +87,6 @@ export default function DeskScene({
 
     // Materials
     const grayMat = new THREE.MeshLambertMaterial({ color: 0xd9d9d9 });
-    const darkGrayMat = new THREE.MeshLambertMaterial({ color: 0x888888 });
     const whiteMat = new THREE.MeshLambertMaterial({ color: 0xffffff });
 
     // Desk top
@@ -112,53 +111,54 @@ export default function DeskScene({
       scene.add(leg);
     }
 
-    // Monitor body
-    const monitor = new THREE.Mesh(
-      new THREE.BoxGeometry(1.5, 1.0, 0.08),
-      darkGrayMat,
-    );
-    monitor.position.set(-0.3, 0.65, -0.7);
-    scene.add(monitor);
+    // // Monitor body
+    // const monitor = new THREE.Mesh(
+    //   new THREE.BoxGeometry(1.5, 1.0, 0.08),
+    //   darkGrayMat,
+    // );
+    // monitor.position.set(-0.3, 0.65, -0.7);
+    // scene.add(monitor);
+    //
+    // // Monitor stand
+    // const monitorStand = new THREE.Mesh(
+    //   new THREE.CylinderGeometry(0.05, 0.08, 0.4, 8),
+    //   grayMat,
+    // );
+    // monitorStand.position.set(-0.3, 0.275, -0.7);
+    // scene.add(monitorStand);
+    //
+    // // Monitor base
+    // const monitorBase = new THREE.Mesh(
+    //   new THREE.BoxGeometry(0.5, 0.05, 0.3),
+    //   grayMat,
+    // );
+    // monitorBase.position.set(-0.3, 0.075, -0.7);
+    // scene.add(monitorBase);
 
-    // Monitor stand
-    const monitorStand = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.05, 0.08, 0.4, 8),
-      grayMat,
-    );
-    monitorStand.position.set(-0.3, 0.275, -0.7);
-    scene.add(monitorStand);
-
-    // Monitor base
-    const monitorBase = new THREE.Mesh(
-      new THREE.BoxGeometry(0.5, 0.05, 0.3),
-      grayMat,
-    );
-    monitorBase.position.set(-0.3, 0.075, -0.7);
-    scene.add(monitorBase);
-
-    // Mouse
-    const mouse = new THREE.Mesh(
-      new THREE.BoxGeometry(0.2, 0.08, 0.3),
-      grayMat,
-    );
-    mouse.position.set(0.8, 0.115, 0.1);
-    scene.add(mouse);
+    // // Mouse
+    // const mouse = new THREE.Mesh(
+    //   new THREE.BoxGeometry(0.2, 0.08, 0.3),
+    //   grayMat,
+    // );
+    // mouse.position.set(0.8, 0.115, 0.1);
+    // scene.add(mouse);
 
     // Coffee cup body
     const cupBody = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.1, 0.08, 0.25, 16),
+      new THREE.CylinderGeometry(0.15, 0.12, 0.375, 16),
       whiteMat,
     );
-    cupBody.position.set(1.4, 0.2, -0.5);
+    cupBody.position.set(1.3, 0.2625, 0.55);
     scene.add(cupBody);
 
     // Coffee cup handle
     const cupHandle = new THREE.Mesh(
-      new THREE.TorusGeometry(0.06, 0.015, 8, 8, Math.PI),
+      new THREE.TorusGeometry(0.09, 0.0225, 8, 8, Math.PI),
       whiteMat,
     );
-    cupHandle.position.set(1.5, 0.2, -0.5);
-    cupHandle.rotation.y = Math.PI / 2;
+    cupHandle.position.set(1.45, 0.2625, 0.55);
+    cupHandle.rotation.y = Math.PI / 1;
+    cupHandle.rotation.z = Math.PI / 2;
     scene.add(cupHandle);
 
     // RightCheat icon plane
