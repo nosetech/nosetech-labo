@@ -198,7 +198,7 @@ export default function DeskScene({
         side: THREE.DoubleSide,
         depthWrite: false,
       });
-      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.08, 0.12), mat);
+      const mesh = new THREE.Mesh(new THREE.CircleGeometry(0.05, 16), mat);
       scene.add(mesh);
 
       const data: SteamParticleData = {
