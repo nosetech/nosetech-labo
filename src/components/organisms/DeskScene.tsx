@@ -326,8 +326,7 @@ export default function DeskScene({
           p.startZ + p.driftZ * t,
         );
         // Fade in (0→30%) then fade out (30→100%)
-        const opacity =
-          t < 0.3 ? (t / 0.3) * 0.45 : ((1 - t) / 0.7) * 0.45;
+        const opacity = t < 0.3 ? (t / 0.3) * 0.45 : ((1 - t) / 0.7) * 0.45;
         (p.mesh.material as THREE.MeshBasicMaterial).opacity = opacity;
         // Grow as it rises
         const scale = 0.6 + t * 1.8;
