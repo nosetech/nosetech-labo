@@ -74,7 +74,7 @@ export default function DeskScene({
       0.1,
       1000,
     );
-    camera.position.set(1, 5, 6);
+    camera.position.set(-4, 0, 1);
     camera.lookAt(0, 0, 0);
 
     // Lighting
