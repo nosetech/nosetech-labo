@@ -169,10 +169,11 @@ export default function DeskScene({
       const iconMat = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
+        side: THREE.DoubleSide,
       });
-      iconPlane = new THREE.Mesh(new THREE.PlaneGeometry(0.45, 0.45), iconMat);
-      iconPlane.position.set(-0.3, 0.185, -0.1);
-      iconPlane.rotation.x = -Math.PI / 2;
+      iconPlane = new THREE.Mesh(new THREE.PlaneGeometry(0.65, 0.65), iconMat);
+      iconPlane.position.set(-1.0, 0.385, -0.3);
+      //iconPlane.rotation.x = -Math.PI / 2;
       scene.add(iconPlane);
     });
 
