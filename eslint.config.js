@@ -19,7 +19,12 @@ export default [
         localStorage: "readonly",
         MediaQueryListEvent: "readonly",
         HTMLInputElement: "readonly",
+        HTMLDivElement: "readonly",
         MutationObserver: "readonly",
+        ResizeObserver: "readonly",
+        PointerEvent: "readonly",
+        requestAnimationFrame: "readonly",
+        cancelAnimationFrame: "readonly",
       },
     },
     plugins: {
