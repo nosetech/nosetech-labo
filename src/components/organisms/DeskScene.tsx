@@ -161,6 +161,59 @@ export default function DeskScene({
     cupHandle.rotation.z = Math.PI / 2;
     scene.add(cupHandle);
 
+    // Steam particles
+    const CUP_X = 1.3;
+    const CUP_Z = 0.55;
+    const CUP_TOP_Y = 0.45; // 0.2625 + 0.375 / 2
+    const STEAM_COUNT = 8;
+
+    type SteamParticleData = {
+      mesh: THREE.Mesh;
+      life: number;
+      maxLife: number;
+      speed: number;
+      startX: number;
+      startZ: number;
+      driftX: number;
+      driftZ: number;
+    };
+
+    const steamParticles: SteamParticleData[] = [];
+
+    const resetSteam = (p: SteamParticleData) => {
+      p.life = 0;
+      p.maxLife = 1.5 + Math.random() * 0.8;
+      p.speed = 0.25 + Math.random() * 0.15;
+      p.startX = CUP_X + (Math.random() - 0.5) * 0.12;
+      p.startZ = CUP_Z + (Math.random() - 0.5) * 0.12;
+      p.driftX = (Math.random() - 0.5) * 0.12;
+      p.driftZ = (Math.random() - 0.5) * 0.12;
+    };
+
+    for (let i = 0; i < STEAM_COUNT; i++) {
+      const mat = new THREE.MeshBasicMaterial({
+        color: 0xdddddd,
+        transparent: true,
+        opacity: 0,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      });
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.08, 0.12), mat);
+      scene.add(mesh);
+
+      const data: SteamParticleData = {
+        mesh,
+        life: Math.random() * 2.3, // staggered start
+        maxLife: 1.5 + Math.random() * 0.8,
+        speed: 0.25 + Math.random() * 0.15,
+        startX: CUP_X + (Math.random() - 0.5) * 0.12,
+        startZ: CUP_Z + (Math.random() - 0.5) * 0.12,
+        driftX: (Math.random() - 0.5) * 0.12,
+        driftZ: (Math.random() - 0.5) * 0.12,
+      };
+      steamParticles.push(data);
+    }
+
     // RightCheat icon plane
     const textureLoader = new THREE.TextureLoader();
     let iconPlane: THREE.Mesh | null = null;
@@ -253,9 +306,36 @@ export default function DeskScene({
     resizeObserver.observe(container);
 
     // Animation loop
+    const clock = new THREE.Clock();
     let animId: number;
     const animate = () => {
       animId = requestAnimationFrame(animate);
+
+      const delta = clock.getDelta();
+
+      // Update steam particles
+      for (const p of steamParticles) {
+        p.life += delta;
+        if (p.life > p.maxLife) {
+          resetSteam(p);
+        }
+        const t = p.life / p.maxLife;
+        p.mesh.position.set(
+          p.startX + p.driftX * t,
+          CUP_TOP_Y + p.speed * p.life,
+          p.startZ + p.driftZ * t,
+        );
+        // Fade in (0→30%) then fade out (30→100%)
+        const opacity =
+          t < 0.3 ? (t / 0.3) * 0.45 : ((1 - t) / 0.7) * 0.45;
+        (p.mesh.material as THREE.MeshBasicMaterial).opacity = opacity;
+        // Grow as it rises
+        const scale = 0.6 + t * 1.8;
+        p.mesh.scale.set(scale, scale, scale);
+        // Billboard: always face camera
+        p.mesh.quaternion.copy(camera.quaternion);
+      }
+
       controls.update();
       renderer.render(scene, camera);
     };
